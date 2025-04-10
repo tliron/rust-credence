@@ -1,0 +1,46 @@
+# This configuration file simply replicates all the defaults.
+
+paths:
+  status: status
+  templates: templates
+
+listen:
+- name: http
+  port: 8080
+
+requests:
+  max-body-size: 4 kib
+  max-duration: 5 s
+
+caching:
+  default: true
+  capacity: 1 gib
+  time-to-idle: 5 s
+  min-body-size: 0 b
+  max-body-size: 10 mib
+
+encoding:
+  default: true
+  min-body-size: 1 kib
+  skip-media-types:
+  - image/png
+  - image/gif
+  - image/jpeg
+  - audio/mpeg
+  - video/mpeg
+
+uri:
+  hide-suffixes:
+  - .credence
+  - .html
+  redirect-trailing-slashes: true
+
+render:
+  rendered-page-midfix: .r
+  annotations:
+    start-delimiter: "```"
+    end-delimiter: "```"
+    default-format: yaml
+  default-renderer: gfm
+  default-template: default.html
+  max-content-size: 1 mib

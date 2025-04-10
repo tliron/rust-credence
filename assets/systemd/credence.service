@@ -1,0 +1,11 @@
+[Unit]
+Description=Credence
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+# To follow the logs: journalctl --follow --unit=credence
+ExecStart=/usr/bin/credence --journald --verbose /my/path
+
+[Install]
+WantedBy=multi-user.target

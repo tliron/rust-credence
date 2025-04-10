@@ -1,0 +1,77 @@
+[package]
+edition = "2024"
+
+name = "credence"
+description = "Web site"
+version = "0.0.1"
+rust-version = "1.86"
+
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/tliron/rust-credence"
+documentation = "https://docs.rs/credence"
+authors = ["Tal Liron"]
+
+readme = "README.md"
+
+categories = [
+    "web-programming",
+    "web-programming::http-server",
+] # https://crates.io/category_slugs
+keywords = ["web", "axum", "tower"]
+
+[dependencies]
+anstream = "0.6.18"
+axum = "0.8.4"
+axum-macros = "0.5.0"
+axum-server = { version = "0.7.2", features = ["tls-rustls"] }
+chrono = "0.4.41"
+compris = { version = "=0.0.4", features = ["derive", "serde"] }
+clap = { version = "4.5.39", features = ["derive", "string"] }
+clap_complete_command = "0.6.1"
+dateparser = "0.2.1"
+duration-str = "0.17.0"
+futures-util = "0.3.31"
+http = "1.3.1"
+hyper = "1.6.0"
+kutil-cli = "=0.0.7"
+kutil-http = { version = "=0.0.4", features = [
+    "axum",
+    "tower",
+    "file",
+    "moka",
+] }
+kutil-io = "=0.0.4"
+kutil-std = "=0.0.5"
+markdown = "1.0.0"
+minijinja = { version = "2.10.2", features = ["loader"] }
+mimalloc = "0.1.46"
+moka = { version = "0.12.10", features = ["future"] }
+regex = "1.11.1"
+serde = "1.0.219"
+thiserror = "2.0.12"
+tracing = "0.1.41"
+tokio = { version = "1.45.1", features = ["rt-multi-thread"] }
+tower = { version = "0.5.2", features = ["util"] }
+tower-http = { version = "0.6.4", features = [
+    "fs",
+    "limit",
+    "timeout",
+    "trace",
+] }
+
+[patch.crates-io]
+compris = { path = "../rust-compris/crates/library" }
+compris-macros = { path = "../rust-compris/crates/macros" }
+kutil-cli = { path = "../rust-kutil/crates/cli" }
+kutil-http = { path = "../rust-kutil/crates/http" }
+kutil-io = { path = "../rust-kutil/crates/io" }
+kutil-std = { path = "../rust-kutil/crates/std" }
+kutil-transcoding = { path = "../rust-kutil/crates/transcoding" }
+
+[profile.dev]
+debug = false
+
+[profile.release]
+# Especially important for wasm!
+strip = "debuginfo"
+lto = "thin"        # true is *very* slow to build!

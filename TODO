@@ -1,0 +1,53 @@
+Web UI
+======
+
+https://github.com/tokio-rs/axum
+https://nguyenhuythanh.com/posts/the-harm-stack-considered-unharmful/
+
+https://github.com/tokio-rs/axum/blob/main/examples/tls-rustls/src/main.rs
+
+Package for web
+https://trunkrs.dev
+
+Web servers should use mimalloc
+https://docs.rs/mimalloc/latest/mimalloc/
+https://www.reddit.com/r/rust/comments/1ifjzvv/picking_a_global_allocator/
+
+https://github.com/bytedance/monoio
+https://github.com/DataDog/glommio
+
+https://emschwartz.me/async-rust-can-be-a-pleasure-to-work-with-without-send-sync-static/
+
+https://github.com/HFQR/xitca-web
+https://github.com/ntex-rs/ntex
+
+https://github.github.com/gfm/
+
+Templates
+=========
+
+https://keats.github.io/tera/
+https://docs.rs/minijinja/latest/minijinja/
+https://docs.rs/liquid/latest/liquid/
+https://docs.rs/handlebars/latest/handlebars/
+
+https://crates.io/crates/pulldown-cmark
+https://github.com/rust-ammonia/ammonia
+
+Fonts
+=====
+
+Sans:
+
+Cabin: thick and condensed
+Varela: very balanced
+Average+Sans: elegant, spatious
+Assistant: elegant, more condensed
+
+Serif:
+
+Cardo
+Cherry Swash: pretty and cute
+Berkshire Swash: stylistic and cool
+
+https://svgsilh.com/image/2154993.html

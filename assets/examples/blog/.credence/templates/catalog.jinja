@@ -1,0 +1,23 @@
+{% extends 'bases/default.jinja' %}
+
+{% block body %}
+{{ content | safe }}
+
+<div id="catalog">
+    <input class="search" type="search" placeholder="Search..." size="50"></input>
+    <button class="sort" data-sort="title">
+        Sort by title
+    </button>
+    <button class="sort" data-sort="recommended">
+        Sort by recommended
+    </button>
+    <ul class="pagination"></ul>
+    <ol class="list">
+    {% for item in catalog %}
+        <li>
+            <a class="title" href="{{ item.href | safe }}">{{ item.title | safe }}</a>
+        </li>
+    {% endfor %}
+    </ol>
+</div>
+{% endblock %}

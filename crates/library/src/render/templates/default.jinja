@@ -1,0 +1,12 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+	    <title>{{ title | safe }}</title>
+		<meta charset="utf-8" />
+		{# See: https://stackoverflow.com/a/13416784/849021 #}
+		<link rel="icon" href="data:image/png;base64,iVBORw0KGgo=" />
+	</head>
+	<body>
+	    {{ content | safe }}
+	</body>
+</html>

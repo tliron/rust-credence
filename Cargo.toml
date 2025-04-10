@@ -1,0 +1,23 @@
+[workspace]
+members = ["crates/cli", "crates/library"]
+resolver = "3"
+
+[patch.crates-io]
+credence-lib = { path = "crates/library" }
+compris = { path = "../rust-compris/crates/library" }
+compris-macros = { path = "../rust-compris/crates/macros" }
+kutil-cli = { path = "../rust-kutil/crates/cli" }
+kutil-cli-macros = { path = "../rust-kutil/crates/cli-macros" }
+kutil-http = { path = "../rust-kutil/crates/http" }
+kutil-io = { path = "../rust-kutil/crates/io" }
+kutil-std = { path = "../rust-kutil/crates/std" }
+kutil-std-macros = { path = "../rust-kutil/crates/std-macros" }
+kutil-transcoding = { path = "../rust-kutil/crates/transcoding" }
+
+[profile.dev]
+debug = false
+
+[profile.release]
+# Especially important for wasm!
+strip = "debuginfo"
+lto = "thin"        # true is *very* slow to build!

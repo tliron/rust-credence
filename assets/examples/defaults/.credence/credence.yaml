@@ -1,0 +1,209 @@
+# This configuration file simply spells out all the defaults.
+# You can use it for reference or copy and modify it as needed.
+
+# * All paths can be absolute *or* relative to the directory where *this* file is located
+# * Time duration syntax: https://docs.rs/parse_duration/latest/parse_duration/#syntax
+# * Byte size syntax supports metric units (mb, kb, gb, etc.) and binary (mib, kib, gib, etc.)
+#   (as well as fractions, such as "1.5 gib")
+
+# This area is ignored by Credence
+# Use it for your own purposes, e.g. for YAML anchors, for example:
+#definitions:
+#  values: &values
+#    a: b
+
+files:
+  # Change path to assets directory.
+  #assets: /my/web/site
+
+  # Path to directory where Credence will look for custom error pages
+  # e.g. `status/404.html`
+  status: status
+
+  # Path to directory where Credence will look for Jinja templates
+  # e.g. `templates/default.jinja`
+  templates: templates
+
+  # Enable file modification coordinator
+  coordinate:
+    # Paths to watch for modifications (directories are scanned recursively)
+    paths:
+    - templates
+
+    # Path to coordinator file
+    coordinator: .coordinator
+
+    # Whether to follow symlinks in paths
+    follow-symlinks: true
+
+    # Whether to fully compare contents (using a hash) to determine if files have changed
+    # (Otherwise uses modification timestamp)
+    # Enable this when using filesystems that do not report reliable modification timestamps
+    compare-contents: false
+
+    # How many modification messages to allow in queue
+    queue-size: 128
+
+
+# You can define one or more ports that Credence will listen to
+# If not specified will default to a single 8000 port as shown here
+ports:
+  # Map from TCP port
+  8000:
+    # `name` is optional and only used for debugging
+    name: http
+
+    # `address` can be:
+    # * A specific IPv6 or IPv4 address,
+    # * The non-specific IPv6 ("::") or non-specific IPv4 ("0.0.0.0"),
+    #   which will enable a heuristic to enumerate all the "reachable" addresses of that IP version
+    # * Empty (the default), which will enumerate all "reachable" addresses of *both* IP versions
+    #   (a.k.a. "dual stack")
+    #address: "::"
+
+    # Optional IPv6 flowinfo (only used for a specific IPv6 address)
+    #flowinfo: 0
+
+    # Optional IPv6 scope (only used for a specific IPv6 address)
+    #scope: 0
+
+    # Whether to include loopbacks when enumerating "reachable" addresses
+    include-loopbacks: true
+
+    # Optional host names to support on the port
+    # The host name is sent by the client (normally as part of the URL)
+    # When specified, *only* these hosts will be allowed
+    # When not specified (the default) Credence will not check the host name
+
+    # Without TLS, just use a string
+    # Example:
+
+    #hosts:
+    #- localhost
+    #- mainsite.org
+
+    # To redirect all requests for this host to another port use the following longer notation
+    # This is useful, for example, for redirecting all "http:" URLs to "https:"
+    # You will get a configuration error if the port is not defined
+    #- name: mainsite.org
+    #  redirect-to: 443
+
+    # To enable TLS ("https") on the port (usually 443) use the following longer notation
+    # Note that a single listener cannot mix both TLS and non-TLS hosts
+
+    # Two methods are available, firstly you can explicitly set `key`
+    # Provide both certificates (can be a chain) and a private key in PEM format
+    # Use a string or (`{content: ...}`) to embed the PEM text directly here
+    # Or use `{path: ...}` to a PEM file (as in this example)
+    # Example:
+
+    #hosts:
+    #- host: mainsite.org
+    #  key:
+    #    certificates: { path: /etc/letsencrypt/live/mainsite.org/fullchain.pem }
+    #    private-key: { path: /etc/letsencrypt/live/mainsite.org/privkey.pem }
+    #- host: secondsite.org
+    #  key:
+    #    certificates: { path: keys/secondsite.org/certificates.pem }
+    #    private-key: { path: keys/secondsite.org/private-key.pem }
+
+    # Alternatively you can set `acme` to grab a key from an ACME provider
+    # This method will also attempt to automatically renew the key when it expires
+    # Example:
+
+    #- host: thirdsite.org
+    #  acme:
+    #    # Directory is optional and defaults to the Let's Encrypt staging directory
+    #    # The Let's Encrypt production directory is: https://acme-v02.api.letsencrypt.org/directory
+    #    #directory: https://acme-staging-v02.api.letsencrypt.org/directory
+    #    contacts:
+    #    - me@mainsite.org
+    #    # Cache is the file path to the ACME cache
+    #    # It is optional and defaults to "acme"
+    #    #cache: acme/thirdsite.org
+
+
+requests:
+  # Requests larger than this will be rejected
+  max-body-size: 4 kib
+
+  # Requests that take more time than this to complete will be aborted
+  max-duration: 10 seconds
+
+
+urls:
+  # URI paths matching these regular expressions will be hidden (status code 404)
+  hide:
+  - \.html$
+
+  # Whether to redirect trailing slashes to the URLs without trailing slashes (status code 301)
+  redirect-trailing-slashes: true
+
+  # Redirect regular expressions
+  #redirect:
+  #- regex: ^/old/(?<page>.*).html
+  #  to: /new/${page}
+  #  code: 301 # optional (the default is 301)
+
+
+render:
+  # Here you can set global variables for all rendered pages
+  # Equivalent to setting `variables` in each page's annotation
+  # Page variables of the same name will override these global variables
+  #variables:
+  #  name: value
+
+  # URL paths with this midfix will be considered rendered (e.g. `.r.md`)
+  midfix: .r
+
+  annotations:
+    # Start delimiter for annotations
+    start-delimiter: "```"
+
+    # End delimiter for annotations
+    end-delimiter: "```"
+
+    # Default annotation format
+    default-format: yaml
+
+  # Default renderer if not specified in annotations ("gfm" or "markdown"/"md")
+  default-renderer: gfm
+
+  # Default Jinja template if not specified in annotations
+  default-template: default.jinja
+
+  # Rendered page content larger than this will cause an error
+  max-content-size: 1 mib
+
+
+caching:
+  # When true caching is "opt-out"
+  default: true
+
+  # Max cache capacity (this is a hint, *not* the actual amount of RAM used)
+  capacity: 1 gib
+
+  # How long cache entries are allowed to live
+  duration: 5 seconds
+
+  # Response bodies smaller than this will bypass the cache
+  min-body-size: "0"
+
+  # Response bodies larger than this will bypass the cache
+  max-body-size: 10 mib
+
+
+encoding:
+  # When true encoding is "opt-out"
+  default: true
+
+  # Response bodies smaller than this will not be encoded
+  min-body-size: 1 kib
+
+  # Responses with these media types will not be encoded
+  skip-media-types:
+  - image/png
+  - image/gif
+  - image/jpeg
+  - audio/mpeg
+  - video/mpeg

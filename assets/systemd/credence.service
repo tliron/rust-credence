@@ -1,0 +1,12 @@
+[Unit]
+Description=Credence
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+User=credence
+ExecStart=/usr/bin/credence --journald --verbose /my/site/assets
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

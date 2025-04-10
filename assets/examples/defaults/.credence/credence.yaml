@@ -1,0 +1,159 @@
+# This configuration file simply spells out all the defaults.
+# You can use it for reference or copy and modify it as needed.
+
+# Note that all paths can be absolute *or* relative to the directory where *this* file is located
+
+paths:
+  # Path to assets directory.
+  assets: ..
+
+  # Path to directory where Credence will look for custom error pages
+  # e.g. `status/404.html`
+  status: status
+
+  # Path to directory where Credence will look for Jinja templates
+  # e.g. `templates/default.jinja`
+  templates: templates
+
+  # Enable modification coordinator
+  coordinate:
+    # Paths to coordinate (directories are scanned recursively)
+    paths:
+    - templates
+
+    # Path to coordinator file
+    coordinator: .coordinator
+
+    # Whether to follow symlinks in paths
+    follow-symlinks: true
+
+    # Whether to fully compare contents (using a hash) to determine if files have changed
+    # (Otherwise just uses modification timestamp)
+    # Enable this when using filesystems that do not report reliable modification timestamps
+    compare-contents: false
+
+
+# You can define one or more listeners
+listen:
+- # The name is optional and only used for debugging
+  name: http
+
+  # Address can be:
+  # * A specific IPv6 or IPv4 address,
+  # * The non-specific IPv6 ("::") or non-specific IPv4 ("0.0.0.0"),
+  #   which will use a heuristic to enumerate all the "reachable" addresses of that IP version
+  # * Empty (the default), which will enumerate all "reachable" addresses of *both* IP versions
+  #address: "::"
+
+  # Optional IPv6 flowinfo (only used for a specific IPv6 address)
+  #flowinfo: 0
+
+  # Optional IPv6 scope (only used for a specific IPv6 address)
+  #scope: 0
+
+  # Whether to include loopbacks when enumerating "reachable" addresses
+  include-loopbacks: true
+
+  # TCP port
+  port: 8000
+
+  # Optional host names to support on this listener
+  # When empty will allow all incoming requests without checking
+  # Without TLS, just use a string:
+  #hosts:
+  #- localhost
+  #- mysite.org
+
+  # To enable TLS ("https") on a listener, use this long notation for hosts
+  # Certificates and private key are in PEM and can be:
+  # A string or (`{content: ...}`) for embedding the PEM text directly here,
+  # Or `{path: ...}` for path to a PEM file
+  # Note that a single listener cannot have both TLS and non-TLS hosts
+  #hosts:
+  #- host: mainsite.org
+  #  tls:
+  #    certificates: {path: "tls/mainsite.org/certificates.pem"}
+  #    private-key: {path: "tls/mainsite.org/private-key.pem"}
+  #- host: secondarysite.org
+  #  tls:
+  #    certificates: {path: "tls/secondarysite.org/certificates.pem"}
+  #    private-key: {path: "tls/secondarysite.org/private-key.pem"}
+
+
+requests:
+  # Requests larger than this will be rejected
+  max-body-size: 4 kib
+
+  # Request that take more time than this to complete will be aborted
+  max-duration: 5 s
+
+
+caching:
+  # When true caching is "opt-out"
+  default: true
+
+  # Max cache capacity (this is a hint, *not* the actual amount of RAM used)
+  capacity: 1 gib
+
+  # After this duration passes without a cache entry being accessed that cache entry will be expire
+  time-to-idle: 5 s
+
+  # Response bodies smaller than this will bypass the cache
+  min-body-size: 0 b
+
+  # Response bodies larger than this will bypass the cache
+  max-body-size: 10 mib
+
+
+encoding:
+  # When true encoding is "opt-out"
+  default: true
+
+  # Response bodies smaller than this will not be encoded
+  min-body-size: 1 kib
+
+  # Responses with these media types will not be encoded
+  skip-media-types:
+  - image/png
+  - image/gif
+  - image/jpeg
+  - audio/mpeg
+  - video/mpeg
+
+uri:
+  # URI paths matching these regular expressions will be hidden (status code 404)
+  hide:
+  - \.html$
+
+  # Whether to redirect trailing slashes to the URLs without trailing slashes (status code 301)
+  redirect-trailing-slashes: true
+
+  # Redirect regular expressions
+  #redirect:
+  #- regex: ^/old/(?<page>.*).html
+  #  to: /new/${page}
+  #  code: 301 # optional (the default is 301)
+
+
+render:
+  # URI paths with this midfix will be considered rendered (e.g. `.r.md`)
+  uri-midfix: .r
+
+  annotations:
+    # Start delimiter for annotations
+    start-delimiter: "```"
+
+    # End delimiter for annotations
+    end-delimiter: "```"
+
+    # Default annotation format
+    default-format: yaml
+
+  # Default renderer if not specified in annotations ("gfm" or "markdown"/"md")
+  default-renderer: gfm
+
+  # Default Jinja template if not specified in annotations
+  default-template: default.jinja
+
+  # Rendered page content larger than this will cause an error
+  max-content-size: 1 mib

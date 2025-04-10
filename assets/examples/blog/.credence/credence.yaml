@@ -1,0 +1,14 @@
+
+listen:
+- name: http
+  port: 8000
+- name: https
+  port: 8001
+  tls:
+    certificate: { path: tls/cert.pem }
+    key: { path: tls/key.pem }
+
+uri:
+  redirect:
+  - regex: ^/blog/(?<page>.*).html
+    to: /${page}

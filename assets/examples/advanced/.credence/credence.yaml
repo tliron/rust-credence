@@ -1,0 +1,5 @@
+
+uri:
+  redirect:
+  - regex: ^/old/(?<page>.*).html
+    to: /new/${page}

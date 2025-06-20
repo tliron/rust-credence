@@ -1,0 +1,25 @@
+files:
+  coordinate:
+    paths:
+    - templates
+    - ../_
+
+ports:
+  8000:
+    name: http
+    hosts:
+    - name: site1
+      redirect-to: 8001
+    - name: site2
+      redirect-to: 8001
+  8001:
+    name: https
+    hosts:
+    - name: site1
+      key:
+        certificates: { path: keys/site1/certificates.pem }
+        private-key: { path: keys/site1/private-key.pem }
+    - name: site2
+      key:
+        certificates: { path: keys/site2/certificates.pem }
+        private-key: { path: keys/site2/private-key.pem }

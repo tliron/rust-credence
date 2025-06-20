@@ -82,7 +82,7 @@ impl CatchMiddleware {
         let file_path = self.assets_path.join(status.to_string() + HTML_SUFFIX);
         if file_path.exists() {
             tracing::debug!("status page: {}", status);
-            return Some(response_from_file(file_path).await.into_response());
+            return Some(response_from_file(file_path, false).await.into_response());
         }
 
         None

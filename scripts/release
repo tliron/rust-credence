@@ -1,0 +1,25 @@
+#!/bin/bash
+set -e
+
+HERE=$(dirname "$(readlink --canonicalize "$BASH_SOURCE")")
+. "$HERE/_env"
+
+go install github.com/goreleaser/goreleaser/v2@latest
+
+# Workaround for ProcessFdQuotaExceeded
+ulimit -n 4096
+
+ARGS=
+if [ "$1" == -t ]; then
+	ARGS='--snapshot --skip=publish'
+fi
+
+GOPATH=${GOPATH:-$HOME/go}
+
+cd "$HERE/.."
+
+"$GOPATH/bin/goreleaser" \
+    --clean \
+	--skip=validate $ARGS
+
+#	--parallelism=$(nproc) \

@@ -6,18 +6,18 @@ Quickstart
 
 First, [get it](https://github.com/tliron/rust-credence/releases).
 
-You can also build it yourself using `cargo install credence`.
+> We currently provide binaries for Linux, specifically with a relatively recent version of [glibc](https://sourceware.org/glibc/). If that's not what you have then you can build Credence yourself on your target machine by [getting Rust](https://www.rust-lang.org/tools/install) and then running `cargo install credence`. If building locally is impossible or doesn't work for your platform then you can always run our binary in a container. Note that it's also possible to build for Linux using [musl](https://musl.libc.org/) instead of glibc.
 
-Then run it, point it at one (or more) directories of site assets. You can start with the [examples](../assets/examples) included in this repository. For example (with extra verbose logs):
+Then run `credence`, pointing it at one (or more) directories of site assets. You can start with the [examples](../assets/examples) included in the download package or this repository. For example (with extra verbose logs):
 
 ```
 git clone https://github.com/tliron/rust-credence.git
-credence -vv rust-credence/assets/examples/hello-world
+credence -vv rust-credence/assets/examples/blog
 ```
 
 You should now be able to see the site locally at [`http://localhost:8000`](http://localhost:8000) and follow the log messages in the terminal.
 
-Credence will look for a configuration file at `.credence/credence.yaml` in your site assets directory. If it doesn't find the file then it will use sensible defaults. [Here's](../assets/examples/defaults/.credence/credence.yaml) an example configuration file that has all the defaults and some documentation.
+Credence will look for a configuration file at `.credence/credence.yaml` in your site assets directory. If it doesn't find the file then it will use sensible defaults. [Here's](../assets/examples/defaults/.credence/credence.yaml) an example configuration file that has all the documentation and defaults.
 
 See the [advanced guide](advanced.md) guide for more information about serving multiple sites from the same process.
 
@@ -89,16 +89,18 @@ By default Markdown pages will use the `default.jinja` HTML template. We'll lear
 
 [Jinja](https://en.wikipedia.org/wiki/Jinja_\(template_engine\)) is an easy-to-use yet powerful templating language. It was originally written in Python and is appropriately friendly. Learn about it [here](https://jinja.palletsprojects.com/en/stable/templates/).
 
-Our implementation is MiniJinja, which has a syntax that is only slightly reduced from the Python reference. It is documented [here](https://docs.rs/minijinja/latest/minijinja/syntax/index.html). Supported filters are listed [here](https://docs.rs/minijinja/latest/minijinja/filters/index.html#functions) and [here](https://docs.rs/minijinja-contrib/latest/minijinja_contrib/filters/index.html). It's also ridiculously easy to create your own custom filters in Rust.
+Our implementation is MiniJinja, which has a syntax that is only slightly reduced from the Python reference. It is documented [here](https://docs.rs/minijinja/latest/minijinja/syntax/index.html). Supported filters are listed [here](https://docs.rs/minijinja/latest/minijinja/filters/index.html#functions) and [here](https://docs.rs/minijinja-contrib/latest/minijinja_contrib/filters/index.html). Credence also adds some [here](https://docs.rs/credence-lib/latest/credence_lib/render/index.html#functions). Rustaceans: It's ridiculously easy to create your own custom filters in Rust.
 
 Credence will automatically inject some standard variables into your templates:
 
 * `content`: This is the HTML that was rendered from Markdown.
-* `title`: If not explicitly set by an annotation (see below) then Credence will grab the first heading from the Markdown content.
-* `created`: The timestamp for when the page was first created. (As [Unix time](https://en.wikipedia.org/wiki/Unix_time).)
-* `updated`: The timestamp for when the page was last updated.
+* `title`: If not explicitly set by an annotation (see below) then Credence will grab the first heading from the Markdown content. If there is no heading then it will be an empty string.
+* `created` (optional): The `created` annotation (see below). (As [Unix time](https://en.wikipedia.org/wiki/Unix_time).)
+* `updated` (optional): The `updated` annotation (see below).
+* `path`: The path from the URL (always begins with "/").
+* `query` (optional): The query from the URL. Map of string to set of strings.
+* `socket`: Information about the TCP socket through which the user request arrived. The value is a map that contains `port` (TCP port, e.g. 443), `tls` (boolean = true if TLS is enabled, i.e. "https"), and `host` (hostname used in the user URL, e.g. "mysite.org"; will be an empty string if you did not configure any hosts for the port). Checking this variable is useful for rendering variations, such as using different CSS for different domains, not showing private parts of the page if TLS is disabled, etc.
 * `catalog`: This powerful variable will be explained in greater detail below.
-* `socket`: Information about the TCP socket through which the user request arrived. The value is a map that contains `port` (TCP port, e.g. 443), `tls` (boolean = true if TLS is enabled, i.e. "https"), and `host` (hostname used in the user URL, e.g. "mysite.org"; will be empty if you did not configure any hosts). Checking this variable is useful for rendering variations, such as using different CSS for different domains, not showing private parts of the page if TLS is disabled, etc.
 
 Let's change the default look. Create the file `.credence/templates/default.jinja` with this content:
 
@@ -109,6 +111,11 @@ Let's change the default look. Create the file `.credence/templates/default.jinj
         <title>{{ title | safe }}</title>
     </head>
     <body style="color: purple;">
+        {% if path != '/' %}
+        <div>
+            <a href="{{ path | parentpath }}">Up</a>
+        </div>
+        {% endif %}
         {% if created %}
         <p>Created: {{ created | dateformat }}</p>
         {% endif %}

@@ -32,7 +32,7 @@ impl SocketMiddleware {
 // Socket
 //
 
-/// Socket
+/// Socket.
 #[derive(Clone, Debug)]
 pub struct Socket {
     /// TCP port.

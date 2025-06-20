@@ -1,14 +1,22 @@
+files:
+  coordinate:
+    paths:
+    - templates
+    - ../_
 
-listen:
-- name: http
-  port: 8000
-- name: https
-  port: 8001
-  tls:
-    certificate: { path: tls/cert.pem }
-    key: { path: tls/key.pem }
+ports:
+  8000:
+    name: http
+  8001:
+    name: https
+    hosts:
+    - name: localhost
+      key:
+        certificates: { path: key/certificates.pem }
+        private-key: { path: key/private-key.pem }
 
-uri:
+urls:
   redirect:
+  # Redirect old URLs to new ones
   - regex: ^/blog/(?<page>.*).html
-    to: /${page}
+    to: /opinions/${page}

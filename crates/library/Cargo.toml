@@ -3,7 +3,7 @@ edition = "2024"
 
 name = "credence-lib"
 description = "An unfussy web server designed for straightforward authoring and scalable performance"
-version = "0.0.1"
+version = "0.0.2"
 rust-version = "1.86"
 
 license = "MIT OR Apache-2.0"
@@ -33,7 +33,7 @@ http = "1.3.1"
 httpdate = "1.0.3"
 hyper = "1.6.0"
 kutil-cli = { version = "=0.0.8", features = ["derive"] }
-kutil-http = { version = "=0.0.4", features = [
+kutil-http = { version = "=0.0.5", features = [
     "acme",
     "axum",
     "file",

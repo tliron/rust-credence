@@ -1,0 +1,38 @@
+version: 2
+
+builds:
+
+- id: credence
+  builder: rust
+  binary: credence
+  targets:
+  - x86_64-unknown-linux-gnu
+  - aarch64-unknown-linux-gnu
+  #- x86_64-apple-darwin
+  #- aarch64-apple-darwin
+  flags:
+  - --release
+  - --package=credence
+
+archives:
+
+- files:
+  - README.md
+  - LICENSE-APACHE
+  - LICENSE-MIT
+  - documentation/basics.md
+  - documentation/advanced.md
+  - documentation/tips.md
+  - assets/**/*
+
+checksum:
+
+  name_template: checksums.txt
+
+release:
+
+  #prerelease: true
+
+  github:
+    owner: tliron
+    name: rust-credence

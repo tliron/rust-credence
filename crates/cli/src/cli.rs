@@ -30,7 +30,7 @@ pub struct CLI {
     pub assets_paths: Vec<PathBuf>,
 
     /// shutdown grace period in seconds
-    #[arg(long = "grace-period", verbatim_doc_comment, default_value_t = 10)]
+    #[arg(long = "grace-period", short = 'g', verbatim_doc_comment, default_value_t = 10)]
     pub grace_period: u64,
 
     /// suppress output

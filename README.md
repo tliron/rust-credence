@@ -1,6 +1,5 @@
-*Work in progress*
-
-[![crates.io](https://img.shields.io/crates/v/credence?color=%23227700)](https://crates.io/crates/credence)
+[![crates.io](https://img.shields.io/crates/v/credence?color=%23227700)](https://crates.io/crates/credence-lib)
+[![docs.rs](https://img.shields.io/badge/docs.rs-latest?color=grey)](https://docs.rs/credence-lib/latest/credence_lib/)
 
 Credence
 ========
@@ -16,9 +15,9 @@ Rustaceans: All of Credence's functionality lives in [credence-lib](https://crat
 Documentation
 -------------
 
-* The [basics guide](documentation/basics.md) will get you up and running with the default configuration.
-* The [advanced guide](documentation/advanced.md) will take it to the next level.
-* We also have some useful [tips](documentation/tips.md)!
+* The [basics guide](https://github.com/tliron/rust-credence/blob/main/documentation/basics.md) will get you up and running with the default configuration.
+* The [advanced guide](https://github.com/tliron/rust-credence/blob/main/documentation/advanced.md) will take it to the next level.
+* We also have some useful [tips](https://github.com/tliron/rust-credence/blob/main/documentation/tips.md)!
 * And for Rustaceans there's the [credence-lib documentation](https://docs.rs/credence-lib/latest/credence_lib/).
 
 Features
@@ -61,7 +60,7 @@ License
 
 Like much of the Rust ecosystem, licensed under your choice of either of
 
-* [Apache License, Version 2.0](LICENSE-APACHE)
-* [MIT license](LICENSE-MIT)
+* [Apache License, Version 2.0](https://github.com/tliron/rust-credence/blob/main/LICENSE-APACHE)
+* [MIT license](https://github.com/tliron/rust-credence/blob/main/LICENSE-MIT)
 
 Unless you explicitly state otherwise, any contribution intentionally submitted for inclusion in the work by you, as defined in the Apache-2.0 license, shall be dual licensed as above, without any additional terms or conditions.

@@ -39,6 +39,9 @@ pub struct RenderContext<'own> {
     /// Original URI path.
     pub original_uri_path: Option<ByteString>,
 
+    /// URI query.
+    pub query: Option<QueryMap>,
+
     /// Last modified.
     pub last_modified: Option<HttpDate>,
 
@@ -63,6 +66,7 @@ impl<'own> RenderContext<'own> {
         socket: Option<Socket>,
         uri_path: ByteString,
         original_uri_path: Option<ByteString>,
+        query: Option<QueryMap>,
         last_modified: Option<HttpDate>,
         is_json: (bool, bool),
         renderer: Renderer,
@@ -75,6 +79,7 @@ impl<'own> RenderContext<'own> {
             socket,
             uri_path,
             original_uri_path,
+            query,
             last_modified,
             is_json,
             renderer,

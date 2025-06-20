@@ -1,17 +1,17 @@
-Credence
-========
+Credence: Hello World
+=====================
 
 Hello, world!
 
 This is the simplest example of a Credence-based web site.
 
-It contains no configuration file and no design, just the defaults and this content.
+It contains no configuration, just the defaults and this single page.
 
 Just to show that Credence can serve regular files, here's an image:
 
 ![my image](image.png)
 
-To learn more about Credence, check out the "basic" example.
+To learn more about Credence can do, check out the "blog" example.
 
 Notes about this URL
 --------------------
@@ -28,8 +28,8 @@ Notes about this file
 Notes about caching
 -------------------
 
-* The default cache time-to-idle is 5 seconds. Every time there is a GET to this URL, that clock is reset. Thus, if you edit this file and want to see the changes happen then 5 seconds need to pass without any GET.
+* The default cache duration is 5 seconds. Every time there is a GET to this URL, that clock is reset. Thus, if you edit this file and want to see the changes happen then 5 seconds need to pass without any GET.
 * You can also force a reset to the cache:
 ```
-curl --request POST http://localhost:8080/admin/reset-cache
+curl --request POST http://localhost:8000/admin/reset-cache
 ```

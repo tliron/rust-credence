@@ -1,0 +1,14 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+	    <title>{{ title | safe }}</title>
+		<meta charset="utf-8" />
+		{# See: https://stackoverflow.com/a/13416784/849021 #}
+		<link rel="icon" href="data:image/png;base64,iVBORw0KGgo=" />
+		<link rel="stylesheet" href="/_/{{ socket.host }}.css">
+	</head>
+	<body>
+		<div>You are on {{ socket.host }}</div>
+	    {{ content | safe }}
+	</body>
+</html>

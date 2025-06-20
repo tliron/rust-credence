@@ -42,12 +42,12 @@ ports:
   80:
     name: http
     hosts:
-    - host: mysite.org
+    - name: mysite.org
       redirect-to: 443
   443:
     name: https
     hosts:
-    - host: mysite.org
+    - name: mysite.org
       key:
         certificates: { path: /etc/letsencrypt/live/mysite.org/fullchain.pem }
         private-key: { path: /etc/letsencrypt/live/mysite.org/privkey.pem }

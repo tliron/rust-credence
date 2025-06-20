@@ -3,7 +3,7 @@ edition = "2024"
 
 name = "credence"
 description = "An unfussy web server designed for straightforward authoring and scalable performance"
-version = "0.0.1"
+version = "0.0.2"
 rust-version = "1.86"
 
 license = "MIT OR Apache-2.0"
@@ -20,11 +20,11 @@ categories = [
 keywords = ["web", "axum", "tower"]
 
 [dependencies]
-credence-lib = "=0.0.1"
+credence-lib = "=0.0.2"
 clap = { version = "4.5.40", features = ["derive", "string"] }
 clap_complete_command = "0.6.1"
 kutil-cli = "=0.0.8"
-kutil-http = { version = "=0.0.4", features = ["axum"] }
+kutil-http = { version = "=0.0.5", features = ["axum"] }
 mimalloc = "0.1.47"
 thiserror = "2.0.12"
 tracing = "0.1.41"

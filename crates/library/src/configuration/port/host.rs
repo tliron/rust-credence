@@ -9,10 +9,10 @@ use {bytestring::*, compris::resolve::*, kutil_cli::debug::*, std::path::*};
 /// Host.
 #[derive(Clone, Debug, Debuggable, Default, Resolve)]
 pub struct Host {
-    /// Host.
+    /// Name.
     #[resolve(single)]
     #[debuggable(style(string))]
-    pub host: ByteString,
+    pub name: ByteString,
 
     /// Whether to redirect all requests to this port.
     #[resolve(key = "redirect-to")]

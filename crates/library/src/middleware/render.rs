@@ -57,14 +57,6 @@ impl RenderMiddleware {
             }
         };
 
-        let original_uri_path = DeferredResponse::get(&request).and_then(|deferred_response| {
-            if let DeferredResponse::RewriteFrom(original_uri_path) = deferred_response {
-                Some(original_uri_path.clone())
-            } else {
-                None
-            }
-        });
-
         if let Some(rendered_page_type) = state_self.configuration.render.is_rendered_page(&uri_path) {
             // Negotiate
             let mut last_modified = None;
@@ -92,7 +84,18 @@ impl RenderMiddleware {
                 }
             }
 
+            let original_uri_path = DeferredResponse::get(&request).and_then(|deferred_response| {
+                if let DeferredResponse::RewriteFrom(original_uri_path) = deferred_response {
+                    Some(original_uri_path.clone())
+                } else {
+                    None
+                }
+            });
+
             let is_json = is_json(&request);
+
+            let query = request.uri().decoded_query_map();
+
             let socket = request.extensions().get::<Socket>().cloned();
 
             let response = next.run(request).await;
@@ -112,6 +115,7 @@ impl RenderMiddleware {
                     socket,
                     uri_path,
                     original_uri_path,
+                    query,
                     last_modified,
                     is_json,
                     &state_self.templates,
@@ -140,9 +144,7 @@ fn is_json(request: &Request) -> (bool, bool) {
         .unwrap_or_default()
     {
         if let Some(query) = request.uri().decoded_query_map() {
-            if let Some(pretty) = query.get("pretty") {
-                return (true, pretty == "true");
-            }
+            return (true, query.get_single_as_ref("pretty") == Some("true"));
         }
 
         (true, false)

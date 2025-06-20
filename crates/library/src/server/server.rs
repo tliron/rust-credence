@@ -60,15 +60,15 @@ impl Server {
         let is_tls = port.is_tls();
 
         for host in &port.hosts {
-            if self.hosts.contains(&host.host) {
-                return Err(format!("host used more than once for port {}: {}", tcp_port, host.host).into());
+            if self.hosts.contains(&host.name) {
+                return Err(format!("host used more than once for port {}: {}", tcp_port, host.name).into());
             }
 
-            self.hosts.push(host.host.clone());
+            self.hosts.push(host.name.clone());
 
             let host_and_optional_port = match tcp_port {
-                80 | 443 => host.host.clone(),
-                _ => format!("{}:{}", host.host, tcp_port).into(),
+                80 | 443 => host.name.clone(),
+                _ => format!("{}:{}", host.name, tcp_port).into(),
             };
 
             if let Some(to_tcp_port) = host.redirect_to {
@@ -76,7 +76,7 @@ impl Server {
                     Some(to_port) => {
                         let mut has_to_host = false;
                         for to_host in &to_port.hosts {
-                            if to_host.host == host.host {
+                            if to_host.name == host.name {
                                 has_to_host = true;
                                 break;
                             }
@@ -85,19 +85,19 @@ impl Server {
                         if !has_to_host {
                             return Err(format!(
                                 "port {} host {:?} `redirect-to` port {} does not have the host",
-                                tcp_port, host.host, to_tcp_port
+                                tcp_port, host.name, to_tcp_port
                             )
                             .into());
                         }
 
-                        let router = new_redirecting_router(to_port.is_tls(), host.host.clone(), to_tcp_port);
+                        let router = new_redirecting_router(to_port.is_tls(), host.name.clone(), to_tcp_port);
                         self.host_router.add(host_and_optional_port, router);
                     }
 
                     None => {
                         return Err(format!(
                             "port {} host {:?} `redirect-to` port is undefined: {}",
-                            tcp_port, host.host, to_tcp_port
+                            tcp_port, host.name, to_tcp_port
                         )
                         .into());
                     }
@@ -105,7 +105,7 @@ impl Server {
             } else {
                 // Add socket middleware
                 let router = site.router.clone().layer(map_request_with_state(
-                    SocketMiddleware::new(Socket::new(tcp_port, is_tls, host.host.clone())),
+                    SocketMiddleware::new(Socket::new(tcp_port, is_tls, host.name.clone())),
                     SocketMiddleware::function,
                 ));
 
@@ -115,9 +115,9 @@ impl Server {
             if is_tls {
                 if let Some(key) = &host.key {
                     let (certificates, private_key) = key.to_bytes()?;
-                    self.tls.add_key_from_pem(host.host.clone(), &certificates, &private_key)?;
+                    self.tls.add_key_from_pem(host.name.clone(), &certificates, &private_key)?;
                 } else if let Some(acme) = &host.acme {
-                    self.tls.add_resolver_from_acme(acme.provider(host.host.clone()))?;
+                    self.tls.add_resolver_from_acme(acme.provider(host.name.clone()))?;
                 } else {
                     return Err(format!("listener {:?} has both TLS and non-TLS hosts", port.name).into());
                 }

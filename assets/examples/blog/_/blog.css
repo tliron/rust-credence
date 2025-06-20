@@ -1,0 +1,60 @@
+body {
+    margin: 0rem;
+    /*
+    Image by Tomislava Babić
+    From: https://www.toptal.com/designers/subtlepatterns/more-leaves-on-green-pattern/
+    */
+    background: url("background.png");
+}
+
+div#main-container {
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: 1rem;
+    width: 60%;
+    background-color: #350;
+}
+
+div#main {
+    margin-left: 1rem;
+    margin-right: 1rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    background-color: white;
+}
+
+a#up {
+    color: #570;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+h1,
+h2 {
+    font-family: monospace;
+}
+
+h2 {
+    margin-top: 3rem;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+td,
+th {
+    margins: 0rem;
+    padding: 1rem;
+    border: 1px solid #994;
+}
+
+thead tr {
+    background-color: #9a6;
+}
+
+pre.mermaid {
+    text-align: center;
+}

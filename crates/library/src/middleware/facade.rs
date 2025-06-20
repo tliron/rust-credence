@@ -23,7 +23,7 @@ use {::axum::extract::*, kutil_http::*};
 /// actual response.
 ///
 /// (Remember that axum runs through layers in the *reverse* order in which they are
-/// programatically added, so add [CatchMiddleware] first *and then* add [FacadeMiddleware].)
+/// programmatically added, so add [CatchMiddleware] first *and then* add [FacadeMiddleware].)
 ///
 /// We referred to "normal" responses above, because actually request mapping can return "abnormal"
 /// responses: as a [Result::Err]. We can consider them abnormal because they circumvent the
@@ -82,15 +82,15 @@ impl FacadeMiddleware {
         let mut asset_path = state_self.configuration.files.asset(uri_path);
 
         // If it's a directory then switch to the index file in the directory
-        let mut _uri_path = String::default();
         if asset_path.is_dir() {
             asset_path = asset_path.join(INDEX);
-            _uri_path = uri_path_join(uri_path, INDEX);
-            uri_path = &_uri_path;
+            new_uri_path = Some(uri_path_join(uri_path, INDEX));
+            uri_path = new_uri_path.as_ref().unwrap();
         }
 
-        let html_file = asset_path.with_extension(HTML_EXTENSION);
-        if html_file.exists() {
+        let mut html_asset_path = asset_path.clone();
+        html_asset_path.as_mut_os_string().push(HTML_SUFFIX);
+        if html_asset_path.exists() {
             // {path}.html
             new_uri_path = Some(String::from(uri_path) + HTML_SUFFIX);
         } else if let Some(rendered_page_uri_path) = match state_self.configuration.rendered_page_uri_path(uri_path) {

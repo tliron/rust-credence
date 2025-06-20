@@ -40,6 +40,8 @@ impl Templates {
         jinja_environment.add_global("ASSETS_PATH", configuration.assets.to_string_lossy());
         jinja_environment.add_filter("fileversion", fileversion_filter);
 
+        jinja_environment.add_filter("parentpath", parentpath_filter);
+
         Self { jinja_environment }
     }
 

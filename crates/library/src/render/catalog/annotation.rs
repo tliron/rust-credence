@@ -79,7 +79,7 @@ impl<'own> CatalogAnnotation<'own> {
 fn cmp_rows_by_column(row1: &Value, row2: &Value, column_path: &ValuePath, ascending: bool) -> Ordering {
     if let Some(a) = row1.traverse(column_path.iter()) {
         if let Some(b) = row2.traverse(column_path.iter()) {
-            let ordering = cmp_lowercase(a, b);
+            let ordering = cmp_value_lowercase(a, b);
             return if ascending { ordering } else { ordering.reverse() };
         }
     }

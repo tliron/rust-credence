@@ -1,11 +1,26 @@
 <!DOCTYPE HTML>
 <html>
-	<head>
-	    <title>{{ title | safe }}</title>
-		<meta charset="utf-8" />
-	</head>
+    {% include 'fragments/head.jinja' %}
+    {% block head_extra %}{% endblock %}
 	<body>
-	    {% block body %}
-		{% endblock %}
+    	<div id="main-container">
+            <div id="main">
+                {% if path != '/' %}
+                <a id="up" href="{{ path | parentpath }}">Up</a>
+                {% endif %}
+                {% block main %}{% endblock %}
+            </div>
+        </div>
+        <script type="module">
+          import mermaid from "//cdnjs.cloudflare.com/ajax/libs/mermaid/11.5.0/mermaid.esm.min.mjs";
+          mermaid.initialize({
+            startOnLoad: false,
+            securityLevel: "loose",
+          });
+          document.addEventListener("DOMContentLoaded", async () => {
+            await mermaid.run();
+          });
+        </script>
+		{% block body_extra %}{% endblock %}
 	</body>
 </html>

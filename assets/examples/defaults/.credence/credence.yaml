@@ -61,11 +61,13 @@ ports:
     #   (a.k.a. "dual stack")
     #address: "::"
 
-    # Optional IPv6 flowinfo (only used for a specific IPv6 address)
-    #flowinfo: 0
+    # Optional IPv6 zone, either network interface name or its 0-based index
+    # (only used for a specific IPv6 address)
+    #zone: enp6s0
 
-    # Optional IPv6 scope (only used for a specific IPv6 address)
-    #scope: 0
+    # Optional IPv6 flowinfo
+    # (only used for a specific IPv6 address)
+    #flowinfo: 0
 
     # Whether to include loopbacks when enumerating "reachable" addresses
     include-loopbacks: true
@@ -91,8 +93,7 @@ ports:
     # To enable TLS ("https") on the port (usually 443) use the following longer notation
     # Note that a single listener cannot mix both TLS and non-TLS hosts
 
-    # Two methods are available, firstly you can explicitly set `key`
-    # Provide both certificates (can be a chain) and a private key in PEM format
+    # Provide certificates (can be a chain) and a private key in PEM format
     # Use a string or (`{content: ...}`) to embed the PEM text directly here
     # Or use `{path: ...}` to a PEM file (as in this example)
     # Example:
@@ -106,21 +107,6 @@ ports:
     #  key:
     #    certificates: { path: keys/secondsite.org/certificates.pem }
     #    private-key: { path: keys/secondsite.org/private-key.pem }
-
-    # Alternatively you can set `acme` to grab a key from an ACME provider
-    # This method will also attempt to automatically renew the key when it expires
-    # Example:
-
-    #- host: thirdsite.org
-    #  acme:
-    #    # Directory is optional and defaults to the Let's Encrypt staging directory
-    #    # The Let's Encrypt production directory is: https://acme-v02.api.letsencrypt.org/directory
-    #    #directory: https://acme-staging-v02.api.letsencrypt.org/directory
-    #    contacts:
-    #    - me@mainsite.org
-    #    # Cache is the file path to the ACME cache
-    #    # It is optional and defaults to "acme"
-    #    #cache: acme/thirdsite.org
 
 
 requests:

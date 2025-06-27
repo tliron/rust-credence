@@ -1,0 +1,31 @@
+[package]
+edition = "2024"
+
+name = "credence"
+description = "An unfussy web server designed for straightforward authoring and scalable performance"
+version = "0.0.3"
+rust-version = "1.89"
+
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/tliron/rust-credence"
+documentation = "https://docs.rs/credence"
+authors = ["Tal Liron"]
+
+readme = "../../README.md"
+
+categories = [
+    "web-programming",
+    "web-programming::http-server",
+] # https://crates.io/category_slugs
+keywords = ["web", "axum", "tower"]
+
+[dependencies]
+credence-lib = "=0.0.3"
+clap = { version = "4.5.44", features = ["derive", "string"] }
+clap_complete_command = "0.6.1"
+kutil-cli = { version = "=0.0.9", features = ["clap"] }
+kutil-http = { version = "=0.0.6", features = ["axum"] }
+mimalloc = "0.1.47"
+thiserror = "2.0.12"
+tracing = "0.1.41"
+tokio = { version = "1.47.1", features = ["rt-multi-thread"] }

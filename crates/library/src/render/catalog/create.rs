@@ -9,7 +9,7 @@ use super::{
 
 use {
     ::axum::http::*,
-    compris::normal::*,
+    compris::{annotation::*, normal::*},
     kutil_http::*,
     std::{path::*, result::Result},
     tokio::fs::*,
@@ -21,7 +21,7 @@ pub async fn create_catalog<'annotation, PathT>(
     uri_path: &str,
     directory: PathT,
     configuration: &RenderConfiguration,
-) -> Result<Vec<Value>, StatusCode>
+) -> Result<Vec<Value<WithAnnotations>>, StatusCode>
 where
     PathT: AsRef<Path>,
 {
@@ -46,26 +46,26 @@ where
                     .annotations
                     .created
                     .as_ref()
-                    .map(|date_time| date_time.value.timestamp())
+                    .map(|date_time| date_time.inner.timestamp())
                     .unwrap_or_default();
 
                 let updated = rendered_page
                     .annotations
                     .updated
                     .as_ref()
-                    .map(|date_time| date_time.value.timestamp())
+                    .map(|date_time| date_time.inner.timestamp())
                     .unwrap_or_default();
 
-                let mut item = Map::new();
+                let mut item = Map::default();
 
-                item.value.insert("title".into(), title.into());
-                item.value.insert("href".into(), href.into());
-                item.value.insert("created".into(), created.into());
-                item.value.insert("updated".into(), updated.into());
+                item.inner.insert("title".into(), title.into());
+                item.inner.insert("href".into(), href.into());
+                item.inner.insert("created".into(), created.into());
+                item.inner.insert("updated".into(), updated.into());
 
                 for (key, column) in &annotation.extra_columns {
                     if let Some(value) = rendered_page.annotations.traverse_variable(column) {
-                        item.value.insert((*key).into(), value.clone());
+                        item.inner.insert((*key).into(), value.clone());
                     }
                 }
 

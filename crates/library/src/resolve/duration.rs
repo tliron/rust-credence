@@ -10,7 +10,7 @@ pub type ResolveDuration = ResolveParseStr<Duration, ParseDuration>;
 
 /// [ResolveDuration] to string.
 pub fn resolve_duration_to_string(duration: &ResolveDuration) -> Result<String, Error> {
-    Ok(duration.value.human_format())
+    Ok(duration.inner.human_format())
 }
 
 //

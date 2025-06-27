@@ -7,11 +7,6 @@ use {credence_lib::configuration::*, kutil_cli::run::*, std::io, thiserror::*, t
 /// Main error.
 #[derive(Debug, Error)]
 pub enum MainError {
-    /// Exit.
-    #[error("exit: {0}")]
-    Exit(#[from] Exit),
-
-    /// I/O.
     #[error("I/O: {0}")]
     IO(#[from] io::Error),
 
@@ -20,12 +15,15 @@ pub enum MainError {
     Configuration(#[from] ConfigurationError),
 
     /// Join.
-    #[error("notify: {0}")]
+    #[error("join: {0}")]
     Join(#[from] JoinError),
 }
 
-impl HasExit for MainError {
-    fn get_exit(&self) -> Option<&Exit> {
-        if let MainError::Exit(exit) = self { Some(exit) } else { None }
+impl RunError for MainError {
+    fn handle(&self) -> (bool, u8) {
+        match self {
+            MainError::Configuration(error) => (error.eprint_validation_errors(), 1),
+            _ => (false, 1),
+        }
     }
 }

@@ -1,4 +1,10 @@
-use {kutil_http::tls::*, std::io, thiserror::*};
+use {
+    compris::{annotation::*, resolve::*},
+    kutil_cli::debug::*,
+    kutil_http::tls::*,
+    std::io,
+    thiserror::*,
+};
 
 //
 // ConfigurationError
@@ -7,6 +13,10 @@ use {kutil_http::tls::*, std::io, thiserror::*};
 /// Configuration error.
 #[derive(Debug, Error)]
 pub enum ConfigurationError {
+    /// None.
+    #[error("no configuration")]
+    None,
+
     /// I/O.
     #[error("I/O: {0}")]
     IO(#[from] io::Error),
@@ -21,17 +31,37 @@ pub enum ConfigurationError {
 
     /// Validation.
     #[error("validation: {0}")]
-    Validation(String),
+    Validation(ResolveErrors<WithAnnotations>),
+}
+
+impl ConfigurationError {
+    /// Prints validation errors.
+    pub fn eprint_validation_errors(&self) -> bool {
+        match self {
+            Self::Validation(errors) => {
+                errors.annotated_debuggables(Some("Invalid CredenceConfiguration".into())).eprint_debug();
+                true
+            }
+            _ => false,
+        }
+    }
+}
+
+impl From<ResolveErrors<WithAnnotations>> for ConfigurationError {
+    fn from(errors: ResolveErrors<WithAnnotations>) -> Self {
+        Self::Validation(errors)
+    }
 }
 
 impl From<String> for ConfigurationError {
     fn from(message: String) -> Self {
-        Self::Validation(message)
+        let error: ResolveError<_> = message.into();
+        Self::Validation(error.into())
     }
 }
 
 impl From<&str> for ConfigurationError {
     fn from(message: &str) -> Self {
-        Self::Validation(message.into())
+        String::from(message).into()
     }
 }

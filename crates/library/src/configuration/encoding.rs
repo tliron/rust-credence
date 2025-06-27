@@ -28,7 +28,7 @@ pub struct EncodingConfiguration {
 impl EncodingConfiguration {
     /// Skip media types.
     pub fn skip_media_types(&self) -> Vec<MediaType> {
-        self.skip_media_types.iter().cloned().map(|media_type| media_type.value.into()).collect()
+        self.skip_media_types.iter().cloned().map(|media_type| media_type.inner.into()).collect()
     }
 }
 

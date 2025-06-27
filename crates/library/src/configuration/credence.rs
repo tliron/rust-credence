@@ -11,7 +11,8 @@ use super::{
 };
 
 use {
-    compris::{normal::*, parse::*, resolve::*, *},
+    bytestring::*,
+    compris::{annotation::*, normal::*, parse::*, resolve::*, *},
     kutil_cli::debug::*,
     kutil_http::{
         cache::{Cache, CommonCacheKey},
@@ -31,7 +32,7 @@ pub struct CredenceConfiguration {
     /// Definitions (ignored).
     #[resolve]
     #[debuggable(skip)]
-    pub definitions: Option<Value>,
+    pub definitions: Option<Value<WithoutAnnotations>>,
 
     /// Files.
     #[resolve]
@@ -71,16 +72,21 @@ pub struct CredenceConfiguration {
 
 impl CredenceConfiguration {
     /// Resolve.
-    pub fn read<ReadT>(reader: &mut ReadT) -> io::Result<Self>
+    pub fn read<ReadT>(reader: &mut ReadT, source: ByteString) -> Result<Self, ConfigurationError>
     where
         ReadT: io::Read,
     {
-        let value =
-            Parser::new(Format::YAML).with_try_unsigned_integers(true).parse(reader).map_err(io::Error::other)?;
+        let value = with_annotations!(
+            Parser::new(Format::YAML)
+                .with_source(source)
+                .with_try_unsigned_integers(true)
+                .parse(reader)
+                .map_err(io::Error::other)?
+        );
 
-        <Value as Resolve<_, CommonResolveContext, CommonResolveError>>::resolve(&value)
-            .map_err(io::Error::other)?
-            .ok_or(io::Error::other("no configuration"))
+        let mut errors = ResolveErrors::new();
+        let configuration = value.resolve_with_errors(&mut errors).map_err(io::Error::other)?;
+        if errors.is_empty() { Ok(configuration.ok_or(ConfigurationError::None)?) } else { Err(errors.into()) }
     }
 
     /// Validate.
@@ -114,9 +120,9 @@ impl CredenceConfiguration {
                     context.cache_key.host = Some(socket.host.clone());
                 }
             })
-            .min_cacheable_body_size(self.caching.min_body_size.value.into())
-            .max_cacheable_body_size(self.caching.max_body_size.value.into())
-            .min_encodable_body_size(self.encoding.min_body_size.value.into())
+            .min_cacheable_body_size(self.caching.min_body_size.inner.into())
+            .max_cacheable_body_size(self.caching.max_body_size.inner.into())
+            .min_encodable_body_size(self.encoding.min_body_size.inner.into())
             .encodable_by_default(self.encoding.default)
             .encodable_by_response(move |context| match context.headers.content_type() {
                 Some(content_type) => !skip_media_types.contains(&content_type),
@@ -131,7 +137,7 @@ impl CredenceConfiguration {
         }
 
         for hide in &self.urls.hide {
-            if hide.value.is_match(uri_path) {
+            if hide.inner.is_match(uri_path) {
                 return true;
             }
         }
@@ -144,19 +150,18 @@ impl CredenceConfiguration {
     /// "{path}" -> "{path}.r.yaml" or "{path}.r.*"
     pub fn rendered_page_uri_path(&self, uri_path: &str) -> io::Result<Option<String>> {
         let asset_path = self.files.asset(uri_path);
-        if let Some(base_file_name) = asset_path.file_name() {
-            if let Some(parent) = asset_path.parent() {
-                if parent.is_dir() {
-                    let base_file_name = base_file_name.to_string_lossy().into_owned() + &self.render.midfix;
-                    for file_path in parent.read_dir()? {
-                        let file_path = file_path?.path();
-                        if let Some(file_name) = file_path.file_name() {
-                            let file_name = file_name.to_string_lossy();
-                            if file_name.starts_with(&base_file_name) {
-                                let extension = &file_name[base_file_name.len()..];
-                                return Ok(Some(String::from(uri_path) + &self.render.midfix + extension));
-                            }
-                        }
+        if let Some(base_file_name) = asset_path.file_name()
+            && let Some(parent) = asset_path.parent()
+            && parent.is_dir()
+        {
+            let base_file_name = base_file_name.to_string_lossy().into_owned() + &self.render.midfix;
+            for file_path in parent.read_dir()? {
+                let file_path = file_path?.path();
+                if let Some(file_name) = file_path.file_name() {
+                    let file_name = file_name.to_string_lossy();
+                    if file_name.starts_with(&base_file_name) {
+                        let extension = &file_name[base_file_name.len()..];
+                        return Ok(Some(String::from(uri_path) + &self.render.midfix + extension));
                     }
                 }
             }

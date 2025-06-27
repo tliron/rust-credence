@@ -37,27 +37,28 @@ pub struct Protect {
 impl Protect {
     /// True if protected.
     pub fn protect(&self, uri_path: &str) -> bool {
-        if let Some(regex) = &self.regex {
-            if regex.value.is_match(uri_path) {
-                return true;
-            }
+        if let Some(regex) = &self.regex
+            && regex.inner.is_match(uri_path)
+        {
+            return true;
         }
 
         false
     }
 
-    /// If the request is authorized returns [None](Option::None).
+    /// If the request is authorized returns [None].
     ///
     /// Otherwise returns a `WWW-Authenticate` header value.
     pub fn authorized(&self, headers: &HeaderMap) -> Option<ByteString> {
-        if let Some((username, password)) = headers.authorization_basic() {
-            if (self.username == username) && (self.password == password) {
-                match &self.realm {
-                    Some(realm) => tracing::debug!("authorized: {}", realm),
-                    None => tracing::debug!("authorized"),
-                }
-                return None;
+        if let Some((username, password)) = headers.authorization_basic()
+            && (self.username == username)
+            && (self.password == password)
+        {
+            match &self.realm {
+                Some(realm) => tracing::debug!("authorized: {}", realm),
+                None => tracing::debug!("authorized"),
             }
+            return None;
         }
 
         let authenticate = match &self.realm {

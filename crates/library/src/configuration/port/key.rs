@@ -26,16 +26,16 @@ impl Key {
     where
         PathT: AsRef<Path>,
     {
-        if let LoadableBytes::Path(path) = &mut self.certificates {
-            if !path.is_absolute() {
-                *path = base_path.as_ref().join(&path);
-            }
+        if let LoadableBytes::Path(path) = &mut self.certificates
+            && !path.is_absolute()
+        {
+            *path = base_path.as_ref().join(&path);
         }
 
-        if let LoadableBytes::Path(path) = &mut self.private_key {
-            if !path.is_absolute() {
-                *path = base_path.as_ref().join(&path);
-            }
+        if let LoadableBytes::Path(path) = &mut self.private_key
+            && !path.is_absolute()
+        {
+            *path = base_path.as_ref().join(&path);
         }
 
         Ok(())

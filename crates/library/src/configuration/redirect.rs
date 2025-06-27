@@ -32,10 +32,10 @@ pub struct Redirect {
 impl Redirect {
     /// If the URI is redirected returns the redirected URI.
     pub fn redirect(&self, uri_path: &str) -> Option<(String, StatusCode)> {
-        if let Some(captures) = self.regex.value.captures(uri_path) {
+        if let Some(captures) = self.regex.inner.captures(uri_path) {
             let mut uri_path = String::new();
             captures.expand(&self.expand_to, &mut uri_path);
-            return Some((uri_path, self.status_code.value));
+            return Some((uri_path, self.status_code.inner));
         }
 
         None

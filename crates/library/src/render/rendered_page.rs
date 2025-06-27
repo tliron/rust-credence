@@ -59,7 +59,7 @@ impl RenderedPage {
         let body = response.into_body();
 
         let (body, _trailers) = body
-            .read_into_string(configuration.max_content_size.value.into())
+            .read_into_string(configuration.max_content_size.inner.into())
             .await
             .map_err_internal_server("read body into string")?;
 
@@ -132,7 +132,7 @@ impl RenderedPage {
     pub fn title(&self, configuration: &RenderConfiguration) -> Result<Option<ByteString>, StatusCode> {
         Ok(match self.annotations.variables.get("title") {
             Some(title) => match title {
-                Value::Text(title) => Some(title.value.clone()),
+                Value::Text(title) => Some(title.inner.clone()),
                 _ => None,
             },
 

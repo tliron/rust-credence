@@ -21,7 +21,7 @@ pub struct CoordinateConfiguration {
     #[debuggable(iter(item), style(string))]
     pub paths: Vec<PathBuf>,
 
-    /// Coordinator path. When [None](Option::None) coordination will be disabled.
+    /// Coordinator path. When [None] coordination will be disabled.
     #[resolve]
     #[debuggable(option, style(string))]
     pub coordinator: Option<PathBuf>,
@@ -50,10 +50,10 @@ impl CoordinateConfiguration {
     {
         let base_path = base_path.as_ref();
 
-        if let Some(coordinator) = &self.coordinator {
-            if !coordinator.is_absolute() {
-                self.coordinator = Some(base_path.join(&coordinator));
-            }
+        if let Some(coordinator) = &self.coordinator
+            && !coordinator.is_absolute()
+        {
+            self.coordinator = Some(base_path.join(&coordinator));
         }
 
         if self.paths.is_empty() {
@@ -71,8 +71,10 @@ impl CoordinateConfiguration {
 
     /// Construct a [Coordinator] if configured.
     pub fn new_coordinator(&self) -> notify::Result<Option<Coordinator>> {
-        Ok(if let Some(coordinator) = &self.coordinator {
-            if !self.paths.is_empty() {
+        Ok(
+            if let Some(coordinator) = &self.coordinator
+                && !self.paths.is_empty()
+            {
                 let mut coordinator = Coordinator::new(
                     coordinator.clone(),
                     self.follow_symlinks,
@@ -91,10 +93,8 @@ impl CoordinateConfiguration {
                 Some(coordinator)
             } else {
                 None
-            }
-        } else {
-            None
-        })
+            },
+        )
     }
 
     /// Coordinator modified timestamp.

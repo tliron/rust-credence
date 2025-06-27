@@ -41,8 +41,8 @@ where
     let router = Router::new()
         .merge(router)
         .layer(map_request_with_state(FacadeMiddleware::new(configuration.clone()), FacadeMiddleware::function))
-        .layer(RequestBodyLimitLayer::new(configuration.requests.max_body_size.value.into()))
-        .layer(TimeoutLayer::new(configuration.requests.max_duration.value.into()))
+        .layer(RequestBodyLimitLayer::new(configuration.requests.max_body_size.inner.into()))
+        .layer(TimeoutLayer::new(configuration.requests.max_duration.inner.into()))
         .layer(TraceLayer::new_for_http());
 
     router

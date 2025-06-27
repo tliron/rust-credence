@@ -35,14 +35,14 @@ impl RenderPreparer for DefaultRenderedPageHandler {
 
         if !context.variables.contains_key("created") {
             if let Some(created) = &context.rendered_page.annotations.created {
-                let created = created.value.timestamp();
+                let created = created.inner.timestamp();
                 context.variables.insert("created".into(), created.into());
             }
         }
 
         if !context.variables.contains_key("updated") {
             if let Some(updated) = &context.rendered_page.annotations.updated {
-                let updated = updated.value.timestamp();
+                let updated = updated.inner.timestamp();
                 context.variables.insert("updated".into(), updated.into());
             }
         }

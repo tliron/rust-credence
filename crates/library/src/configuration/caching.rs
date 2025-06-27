@@ -47,8 +47,8 @@ impl CachingConfiguration {
     pub fn cache(&self) -> MokaCacheImplementation {
         let cache = Cache::<CommonCacheKey, _>::builder()
             .for_http_response()
-            .max_capacity(self.capacity.value.into())
-            .time_to_live(self.duration.value.into())
+            .max_capacity(self.capacity.inner.into())
+            .time_to_live(self.duration.inner.into())
             .eviction_listener(|key, _value, cause| {
                 tracing::debug!("evict ({:?}): {}", cause, key);
             })

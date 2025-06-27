@@ -10,8 +10,17 @@ And maybe even with visitors from other worlds. LOL.
 * [Opinions](opinions)
 * [Food](food)
 
+An Image
+--------
+
+Just to show that Credence can serve regular old files:
+
+![my image](image.png)
+
 Tables Are Cool
 ---------------
+
+GitHub-Flavored Markdown is pretty nice!
 
 | Tables   |      Are      |  Cool |
 |----------|:-------------:|------:|

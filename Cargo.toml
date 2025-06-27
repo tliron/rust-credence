@@ -1,18 +1,18 @@
 [workspace]
-members = ["crates/cli", "crates/library"]
 resolver = "3"
+members = ["cli", "library"]
 
 [patch.crates-io]
-credence-lib = { path = "crates/library" }
-compris = { path = "../rust-compris/crates/library" }
-compris-macros = { path = "../rust-compris/crates/macros" }
-kutil-cli = { path = "../rust-kutil/crates/cli" }
-kutil-cli-macros = { path = "../rust-kutil/crates/cli-macros" }
-kutil-http = { path = "../rust-kutil/crates/http" }
-kutil-io = { path = "../rust-kutil/crates/io" }
-kutil-std = { path = "../rust-kutil/crates/std" }
-kutil-std-macros = { path = "../rust-kutil/crates/std-macros" }
-kutil-transcoding = { path = "../rust-kutil/crates/transcoding" }
+credence-lib = { path = "library" }
+compris = { path = "../rust-compris/library" }
+compris-macros = { path = "../rust-compris/macros" }
+kutil-cli = { path = "../rust-kutil/cli" }
+kutil-cli-macros = { path = "../rust-kutil/cli-macros" }
+kutil-http = { path = "../rust-kutil/http" }
+kutil-io = { path = "../rust-kutil/io" }
+kutil-std = { path = "../rust-kutil/std" }
+kutil-std-macros = { path = "../rust-kutil/std-macros" }
+kutil-transcoding = { path = "../rust-kutil/transcoding" }
 
 [profile.dev]
 debug = false

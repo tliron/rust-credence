@@ -71,10 +71,10 @@ impl FacadeMiddleware {
 
         // Protect
 
-        if let Some(protect) = state_self.configuration.urls.protect(uri_path) {
-            if let Some(authenticate) = protect.authorized(request.headers()) {
-                return request.with_deferred_authenticate(authenticate);
-            }
+        if let Some(protect) = state_self.configuration.urls.protect(uri_path)
+            && let Some(authenticate) = protect.authorized(request.headers())
+        {
+            return request.with_deferred_authenticate(authenticate);
         }
 
         // Rewrite

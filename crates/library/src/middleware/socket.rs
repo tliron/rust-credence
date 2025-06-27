@@ -52,9 +52,12 @@ impl Socket {
     }
 }
 
-impl Into<Value> for &Socket {
-    fn into(self) -> Value {
-        let mut socket_map = Map::new();
+impl<AnnotationsT> Into<Value<AnnotationsT>> for &Socket
+where
+    AnnotationsT: Default,
+{
+    fn into(self) -> Value<AnnotationsT> {
+        let mut socket_map = Map::default();
         socket_map.value.insert("port".into(), self.port.into());
         socket_map.value.insert("tls".into(), self.tls.into());
         socket_map.value.insert("host".into(), self.host.clone().into());

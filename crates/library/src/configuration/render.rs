@@ -1,3 +1,5 @@
+use compris::annotation::WithAnnotations;
+
 use super::{
     super::{render::*, resolve::*, util::*},
     annotations::*,
@@ -21,7 +23,7 @@ pub struct RenderConfiguration {
     /// Global variables.
     #[resolve]
     #[debuggable(iter(kv), as(debuggable), key_style(string))]
-    pub variables: FastHashMap<ByteString, Value>,
+    pub variables: FastHashMap<ByteString, Value<WithAnnotations>>,
 
     /// Rendered page URI midfix.
     #[resolve(key = "midfix")]

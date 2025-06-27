@@ -12,7 +12,10 @@ where
     let configuration_path = configuration_base_path.join(CREDENCE_CONFIGURATION_FILE_NAME);
 
     let mut configuration = if configuration_path.exists() {
-        CredenceConfiguration::read(&mut File::open(configuration_path)?)?
+        CredenceConfiguration::read(
+            &mut File::open(&configuration_path)?,
+            configuration_path.to_string_lossy().into_owned().into(),
+        )?
     } else {
         tracing::info!("configuration file not found: {}", configuration_path.display());
         CredenceConfiguration::default()

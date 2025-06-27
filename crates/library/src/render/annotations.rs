@@ -5,7 +5,7 @@ use super::{
 
 use {
     bytestring::*,
-    compris::{normal::*, parse::Parser, resolve::*, *},
+    compris::{annotation::*, normal::*, parse::Parser, resolve::*, *},
     kutil_std::{collections::*, string::*},
 };
 
@@ -34,7 +34,7 @@ pub struct Annotations {
 
     /// Variables.
     #[resolve]
-    pub variables: FastHashMap<ByteString, Value>,
+    pub variables: FastHashMap<ByteString, Value<WithAnnotations>>,
 
     /// Headers.
     #[resolve]
@@ -42,7 +42,7 @@ pub struct Annotations {
 
     /// Other.
     #[resolve(other_keys)]
-    pub other: FastHashMap<ByteString, Value>,
+    pub other: FastHashMap<ByteString, Value<WithAnnotations>>,
 }
 
 impl Annotations {
@@ -58,13 +58,14 @@ impl Annotations {
 
     /// Parse.
     pub fn parse(identifier: &str, representation: &str, format: Format) -> Self {
-        match Parser::new(format).with_try_unsigned_integers(true).parse_from_string(representation) {
-            Ok(annotations) => match Resolve::<_, CommonResolveContext, CommonResolveError>::resolve(&annotations) {
+        match Parser::new(format).with_try_unsigned_integers(true).parse_from_string::<WithAnnotations>(representation)
+        {
+            Ok(annotations) => match annotations.resolve() {
                 Ok(annotations) => {
-                    if let Some(annotations) = annotations {
-                        return annotations;
-                    }
+                    return annotations;
                 }
+
+                Err(ResolveError::None) => {}
 
                 Err(error) => tracing::error!("{}: {}", identifier, error),
             },
@@ -76,13 +77,13 @@ impl Annotations {
     }
 
     /// Traverse variable.
-    pub fn traverse_variable(&self, keys: &RefValuePath<'_>) -> Option<&Value> {
+    pub fn traverse_variable(&self, keys: &RefTraversal<'_, WithAnnotations>) -> Option<&Value<WithAnnotations>> {
         if !keys.is_empty() {
-            if let Value::Text(first_key) = &keys[0] {
-                if let Some(first_value) = self.variables.get(&first_key.value) {
-                    let keys = keys[1..].iter().map(|value| *value);
-                    return first_value.traverse(keys);
-                }
+            if let Value::Text(first_key) = &keys[0]
+                && let Some(first_value) = self.variables.get(&first_key.value)
+            {
+                let keys = keys[1..].iter().map(|value| *value);
+                return first_value.traverse(keys);
             }
         }
 

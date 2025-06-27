@@ -84,12 +84,11 @@ impl Renderer {
 
         if let Some(children) = node.children() {
             for child in children {
-                if let Node::Heading(heading) = child {
-                    if let Some(child) = heading.children.get(0) {
-                        if let Node::Text(text) = child {
-                            return Ok(Some(text.value.clone().into()));
-                        }
-                    }
+                if let Node::Heading(heading) = child
+                    && let Some(child) = heading.children.get(0)
+                    && let Node::Text(text) = child
+                {
+                    return Ok(Some(text.value.clone().into()));
                 }
             }
         }

@@ -14,7 +14,7 @@ use {
         response::Response,
     },
     bytestring::*,
-    compris::{normal::*, ser::*, *},
+    compris::{annotation::*, normal::*, ser::*, *},
     httpdate::*,
     kutil_http::*,
     kutil_std::collections::*,
@@ -28,7 +28,7 @@ pub struct RenderContext<'own> {
     pub rendered_page: &'own RenderedPage,
 
     /// Variables.
-    pub variables: FastHashMap<ByteString, Value>,
+    pub variables: FastHashMap<ByteString, Value<WithAnnotations>>,
 
     /// Socket.
     pub socket: Option<Socket>,
@@ -62,7 +62,7 @@ impl<'own> RenderContext<'own> {
     /// Constructor.
     pub fn new(
         rendered_page: &'own RenderedPage,
-        variables: FastHashMap<ByteString, Value>,
+        variables: FastHashMap<ByteString, Value<WithAnnotations>>,
         socket: Option<Socket>,
         uri_path: ByteString,
         original_uri_path: Option<ByteString>,
@@ -128,7 +128,7 @@ impl<'own> RenderContext<'own> {
             .map_err_internal_server("serialize JSON")
     }
 
-    fn variables_into_value(self) -> Value {
+    fn variables_into_value(self) -> Value<WithAnnotations> {
         self.variables.into_iter().map(|(key, value)| (key.into(), value.clone())).collect()
     }
 }

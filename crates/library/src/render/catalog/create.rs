@@ -9,7 +9,7 @@ use super::{
 
 use {
     ::axum::http::*,
-    compris::normal::*,
+    compris::{annotation::*, normal::*},
     kutil_http::*,
     std::{path::*, result::Result},
     tokio::fs::*,
@@ -21,7 +21,7 @@ pub async fn create_catalog<'annotation, PathT>(
     uri_path: &str,
     directory: PathT,
     configuration: &RenderConfiguration,
-) -> Result<Vec<Value>, StatusCode>
+) -> Result<Vec<Value<WithAnnotations>>, StatusCode>
 where
     PathT: AsRef<Path>,
 {
@@ -56,7 +56,7 @@ where
                     .map(|date_time| date_time.value.timestamp())
                     .unwrap_or_default();
 
-                let mut item = Map::new();
+                let mut item = Map::default();
 
                 item.value.insert("title".into(), title.into());
                 item.value.insert("href".into(), href.into());

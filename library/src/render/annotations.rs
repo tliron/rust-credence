@@ -5,7 +5,7 @@ use super::{
 
 use {
     compris::{annotate::*, normal::*, parse::Parser, resolve::*, *},
-    kutil_std::{collections::*, string::*, zerocopy::*},
+    kutil::std::{collections::*, string::*, immutable::*},
 };
 
 //

@@ -1,31 +1,36 @@
 use super::super::resolve::*;
 
-use {axum::http::*, compris::resolve::*, kutil_cli::debug::*, kutil_std::zerocopy::*, regex::*};
+use {
+    axum::http::*,
+    compris::resolve::*,
+    kutil::{cli::depict::*, std::immutable::*},
+    regex::*,
+};
 
 //
 // Redirect
 //
 
 /// Redirect.
-#[derive(Clone, Debug, Debuggable, Resolve)]
+#[derive(Clone, Debug, Depict, Resolve)]
 pub struct Redirect {
     /// Regex.
     ///
     /// See [implementation syntax](https://docs.rs/regex/latest/regex/#syntax).
     #[resolve(required)]
-    #[debuggable(as(display), style(string))]
+    #[depict(as(display), style(string))]
     pub regex: ResolveRegex,
 
     /// Expand to.
     ///
     /// See [implementation syntax](https://docs.rs/regex/latest/regex/struct.Captures.html#method.expand).
     #[resolve(required, key = "to")]
-    #[debuggable(style(string))]
+    #[depict(style(string))]
     pub expand_to: ByteString,
 
     /// Redirect status code. Defaults to 301 (Moved Permanently).
     #[resolve(key = "code")]
-    #[debuggable(as(display), style(symbol))]
+    #[depict(as(display), style(symbol))]
     pub status_code: ResolveStatusCode,
 }
 

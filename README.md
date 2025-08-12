@@ -51,7 +51,7 @@ Under the Hood
 --------------
 
 * Profoundly asynchronous (scales up gracefully), covering all networking, file access, caching, and compression algorithms
-* Automagical in-memory caching (using [kutil_http](https://docs.rs/kutil-http/latest/kutil_http/tower/caching/struct.CachingLayer.html))
+* Automagical in-memory caching (using [kutil](https://docs.rs/kutil-http/latest/kutil/http/tower/caching/struct.CachingLayer.html))
 * Automagical response compression (integrated into the cache)
 * [Rust](https://www.rust-lang.org/), [Tokio](https://github.com/tokio-rs/tokio), [Hyper](https://github.com/hyperium/hyper), [axum](https://github.com/tokio-rs/axum), [Tower](https://github.com/tower-rs/tower) (a.k.a. the "RTHaT stack"?)
 

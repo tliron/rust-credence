@@ -1,22 +1,26 @@
 use super::{super::error::*, loadable_bytes::*};
 
-use {compris::resolve::*, kutil_cli::debug::*, kutil_std::zerocopy::*, std::path::*};
+use {
+    compris::resolve::*,
+    kutil::{cli::depict::*, std::immutable::*},
+    std::path::*,
+};
 
 //
 // Key
 //
 
 /// TLS key.
-#[derive(Clone, Debug, Debuggable, Default, Resolve)]
+#[derive(Clone, Debug, Default, Depict, Resolve)]
 pub struct Key {
     /// Certificates PEM.
     #[resolve(required)]
-    #[debuggable(as(display), style(symbol))]
+    #[depict(as(display), style(symbol))]
     pub certificates: LoadableBytes,
 
     /// Private key PEM.
     #[resolve(required, key = "private-key")]
-    #[debuggable(as(display), style(symbol))]
+    #[depict(as(display), style(symbol))]
     pub private_key: LoadableBytes,
 }
 

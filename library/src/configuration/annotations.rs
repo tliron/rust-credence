@@ -1,7 +1,6 @@
 use {
     compris::{resolve::*, *},
-    kutil_cli::debug::*,
-    kutil_std::zerocopy::*,
+    kutil::{cli::depict::*, std::immutable::*},
 };
 
 //
@@ -9,21 +8,21 @@ use {
 //
 
 /// Annotations configuration.
-#[derive(Clone, Debug, Debuggable, Resolve)]
+#[derive(Clone, Debug, Depict, Resolve)]
 pub struct AnnotationsConfiguration {
     /// Start delimiter.
     #[resolve(key = "start-delimiter")]
-    #[debuggable(style(string))]
+    #[depict(style(string))]
     pub start_delimiter: ByteString,
 
     /// End delimiter.
     #[resolve(key = "end-delimiter")]
-    #[debuggable(style(string))]
+    #[depict(style(string))]
     pub end_delimiter: ByteString,
 
     /// Default format.
     #[resolve(key = "default-format")]
-    #[debuggable(as(display), style(symbol))]
+    #[depict(as(display), style(symbol))]
     pub default_format: ResolveFromStr<Format>,
 }
 

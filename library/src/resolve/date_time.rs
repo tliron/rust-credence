@@ -2,7 +2,7 @@ use {
     chrono::*,
     compris::resolve::*,
     dateparser::*,
-    kutil_std::string::{ParseError, ParseStr},
+    kutil::std::string::{ParseError, ParseStr},
 };
 
 /// [DateTime] that implements [Resolve].

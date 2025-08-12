@@ -1,6 +1,6 @@
 use {
     clap::{builder::*, *},
-    kutil_cli::clap::*,
+    kutil::cli::clap::*,
     std::path::*,
 };
 

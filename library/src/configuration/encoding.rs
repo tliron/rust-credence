@@ -1,6 +1,9 @@
 use super::super::resolve::*;
 
-use {compris::resolve::*, kutil_cli::debug::*, kutil_http::*, kutil_std::metric::*};
+use {
+    compris::resolve::*,
+    kutil::{cli::debug::*, http::*, std::metric::*},
+};
 
 //
 // EncodingConfiguration

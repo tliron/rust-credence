@@ -12,13 +12,15 @@ use super::{
 
 use {
     compris::{annotate::*, normal::*, parse::*, resolve::*, *},
-    kutil_cli::debug::*,
-    kutil_http::{
-        cache::{Cache, CommonCacheKey},
-        tower::caching::*,
-        *,
+    kutil::{
+        cli::debug::*,
+        http::{
+            cache::{Cache, CommonCacheKey},
+            tower::caching::*,
+            *,
+        },
+        std::zerocopy::*,
     },
-    kutil_std::zerocopy::*,
     std::{collections::*, io, path::*},
 };
 

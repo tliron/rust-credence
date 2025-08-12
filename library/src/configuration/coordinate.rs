@@ -3,8 +3,7 @@ use super::{super::coordinator::*, error::*};
 use {
     compris::resolve::*,
     httpdate::*,
-    kutil_cli::debug::*,
-    kutil_http::*,
+    kutil::{cli::debug::*, http::*},
     notify,
     std::{fs::*, io, path::*},
 };

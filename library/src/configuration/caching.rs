@@ -2,9 +2,11 @@ use super::super::resolve::*;
 
 use {
     compris::resolve::*,
-    kutil_cli::debug::*,
-    kutil_http::cache::{implementation::moka::*, *},
-    kutil_std::metric::*,
+    kutil::{
+        cli::debug::*,
+        http::cache::{implementation::moka::*, *},
+        std::metric::*,
+    },
     moka::future::Cache,
     std::time::*,
 };

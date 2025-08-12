@@ -1,6 +1,11 @@
 use super::super::resolve::*;
 
-use {axum::http::*, compris::resolve::*, kutil_cli::debug::*, kutil_std::zerocopy::*, regex::*};
+use {
+    axum::http::*,
+    compris::resolve::*,
+    kutil::{cli::debug::*, std::zerocopy::*},
+    regex::*,
+};
 
 //
 // Redirect

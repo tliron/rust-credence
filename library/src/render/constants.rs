@@ -1,4 +1,4 @@
-use kutil_http::*;
+use kutil::http::*;
 
 /// Index.
 pub const INDEX: &str = "index";

@@ -6,8 +6,10 @@ use super::{
 
 use {
     compris::{annotate::*, normal::*, resolve::*, *},
-    kutil_cli::debug::*,
-    kutil_std::{collections::*, metric::*, zerocopy::*},
+    kutil::{
+        cli::depict::*,
+        std::{collections::*, immutable::*, metric::*},
+    },
 };
 
 //
@@ -15,36 +17,36 @@ use {
 //
 
 /// Render configuration.
-#[derive(Clone, Debug, Debuggable, Resolve)]
+#[derive(Clone, Debug, Depict, Resolve)]
 pub struct RenderConfiguration {
     /// Global variables.
     #[resolve]
-    #[debuggable(iter(kv), as(debuggable), key_style(string))]
+    #[depict(iter(kv), as(depict), key_style(string))]
     pub variables: FastHashMap<ByteString, Variant<WithAnnotations>>,
 
     /// Rendered page URI midfix.
     #[resolve(key = "midfix")]
-    #[debuggable(style(string))]
+    #[depict(style(string))]
     pub midfix: ByteString,
 
     /// Annotations.
     #[resolve]
-    #[debuggable(as(debuggable))]
+    #[depict(as(depict))]
     pub annotations: AnnotationsConfiguration,
 
     /// Default renderer.
     #[resolve(key = "default-renderer")]
-    #[debuggable(as(display), style(symbol))]
+    #[depict(as(display), style(symbol))]
     pub default_renderer: Renderer,
 
     /// Default template.
     #[resolve(key = "default-template")]
-    #[debuggable(style(string))]
+    #[depict(style(string))]
     pub default_template: ByteString,
 
     /// Maximum content size.
     #[resolve(key = "max-content-size")]
-    #[debuggable(as(display), style(symbol))]
+    #[depict(as(display), style(symbol))]
     pub max_content_size: ResolveByteCount,
 }
 

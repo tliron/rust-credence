@@ -6,7 +6,7 @@
 An unfussy web server designed for straightforward authoring and scalable performance.
 
 For more information and usage examples see the
-[home page](https://github.com/tliron/rust-credence).
+[home page](https://github.com/tliron/credence).
 */
 
 /// Configuration.

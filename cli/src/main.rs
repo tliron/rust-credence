@@ -6,7 +6,7 @@
 An unfussy web server designed for straightforward authoring and scalable performance.
 
 For more information and usage examples see the
-[home page](https://github.com/tliron/rust-credence).
+[home page](https://github.com/tliron/credence).
 */
 
 mod cli;
@@ -23,5 +23,5 @@ static GLOBAL: MiMalloc = MiMalloc;
 
 /// Main.
 pub fn main() -> ExitCode {
-    kutil_cli::run::run(run)
+    kutil::cli::run::run(run)
 }

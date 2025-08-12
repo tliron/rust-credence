@@ -1,6 +1,6 @@
 use {
     compris::resolve::*,
-    kutil_std::{error::*, zerocopy::*},
+    kutil::std::{error::*, immutable::*},
     std::{fmt, fs::*, io, path::*},
 };
 

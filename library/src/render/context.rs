@@ -15,8 +15,10 @@ use {
     },
     compris::{annotate::*, normal::*, ser::*, *},
     httpdate::*,
-    kutil_http::*,
-    kutil_std::{collections::*, zerocopy::*},
+    kutil::{
+        http::*,
+        std::{collections::*, immutable::*},
+    },
     std::result::Result,
 };
 

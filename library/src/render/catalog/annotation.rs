@@ -1,7 +1,7 @@
 use super::{super::super::util::*, columns::*};
 
 use {
-    compris::{annotate::*, normal::*, *},
+    compris::{annotate::*, normal::*},
     std::cmp::*,
 };
 

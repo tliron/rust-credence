@@ -2,9 +2,11 @@ use super::{super::error::*, host::*};
 
 use {
     compris::resolve::*,
-    kutil_cli::debug::*,
-    kutil_io::network::ip::*,
-    kutil_std::{sync::*, zerocopy::*},
+    kutil::{
+        cli::depict::*,
+        io::network::ip::*,
+        std::{immutable::*, sync::*},
+    },
     std::{io, net::*, path::*, vec},
 };
 
@@ -13,43 +15,43 @@ use {
 //
 
 /// Port.
-#[derive(Clone, Debug, Debuggable, Resolve)]
+#[derive(Clone, Debug, Depict, Resolve)]
 pub struct Port {
     /// Index.
-    #[debuggable(style(number))]
+    #[depict(style(number))]
     pub index: usize,
 
     /// Name. Will default to a string representation of the index.
     #[resolve]
-    #[debuggable(style(string))]
+    #[depict(style(string))]
     pub name: ByteString,
 
     /// Optional address or hint.
     ///
     /// See [ListenableAddressesConfiguration::addresses] where `allow_unspecified` is false.
     #[resolve]
-    #[debuggable(option, as(display), style(string))]
+    #[depict(option, as(display), style(string))]
     pub address: Option<IpAddr>,
     /// Optional zone for IPv6 address.
     #[resolve]
-    #[debuggable(option, style(string))]
+    #[depict(option, style(string))]
     pub zone: Option<ByteString>,
 
     /// Optional flowinfo for IPv6 address.
     #[resolve]
-    #[debuggable(option, style(number))]
+    #[depict(option, style(number))]
     pub flowinfo: Option<u32>,
 
     /// Whether to include loopbacks when providing reachable addresses.
     ///
     /// Default is true.
     #[resolve(key = "include-loopbacks")]
-    #[debuggable(style(symbol))]
+    #[depict(style(symbol))]
     pub include_loopbacks: bool,
 
     /// Hosts.
     #[resolve]
-    #[debuggable(iter(item), as(debuggable))]
+    #[depict(iter(item), as(depict))]
     pub hosts: Vec<Host>,
 }
 

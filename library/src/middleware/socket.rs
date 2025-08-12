@@ -1,4 +1,4 @@
-use {axum::extract::*, compris::normal::*, kutil_std::zerocopy::*};
+use {axum::extract::*, compris::normal::*, kutil::std::immutable::*};
 
 //
 // SocketMiddleware
@@ -58,9 +58,9 @@ where
 {
     fn into(self) -> Variant<AnnotatedT> {
         let mut socket_map = Map::default();
-        socket_map.inner.insert("port".into(), self.port.into());
-        socket_map.inner.insert("tls".into(), self.tls.into());
-        socket_map.inner.insert("host".into(), self.host.clone().into());
+        socket_map.into_insert("port", self.port);
+        socket_map.into_insert("tls", self.tls);
+        socket_map.into_insert("host", self.host.clone());
         socket_map.into()
     }
 }

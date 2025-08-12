@@ -2,9 +2,11 @@ use super::super::resolve::*;
 
 use {
     compris::resolve::*,
-    kutil_cli::debug::*,
-    kutil_http::cache::{implementation::moka::*, *},
-    kutil_std::metric::*,
+    kutil::{
+        cli::depict::*,
+        http::cache::{implementation::moka::*, *},
+        std::metric::*,
+    },
     moka::future::Cache,
     std::time::*,
 };
@@ -14,31 +16,31 @@ use {
 //
 
 /// Caching configuration.
-#[derive(Clone, Debug, Debuggable, Resolve)]
+#[derive(Clone, Debug, Depict, Resolve)]
 pub struct CachingConfiguration {
     /// Default.
     #[resolve]
-    #[debuggable(style(symbol))]
+    #[depict(style(symbol))]
     pub default: bool,
 
     /// Capacity.
     #[resolve]
-    #[debuggable(as(display), style(symbol))]
+    #[depict(as(display), style(symbol))]
     pub capacity: ResolveByteCount,
 
     /// Cache entry duration.
     #[resolve(key = "duration")]
-    #[debuggable(as(custom(resolve_duration_to_string)), style(symbol))]
+    #[depict(as(custom(resolve_duration_to_string)), style(symbol))]
     pub duration: ResolveDuration,
 
     /// Minimum cacheable body size.
     #[resolve(key = "min-body-size")]
-    #[debuggable(as(display), style(symbol))]
+    #[depict(as(display), style(symbol))]
     pub min_body_size: ResolveByteCount,
 
     /// Maximum cacheable body size.
     #[resolve(key = "max-body-size")]
-    #[debuggable(as(display), style(symbol))]
+    #[depict(as(display), style(symbol))]
     pub max_body_size: ResolveByteCount,
 }
 

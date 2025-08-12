@@ -1,32 +1,36 @@
 use super::{super::error::*, acme::*, key::*};
 
-use {compris::resolve::*, kutil_cli::debug::*, kutil_std::zerocopy::*, std::path::*};
+use {
+    compris::resolve::*,
+    kutil::{cli::depict::*, std::immutable::*},
+    std::path::*,
+};
 
 //
 // Host
 //
 
 /// Host.
-#[derive(Clone, Debug, Debuggable, Default, Resolve)]
+#[derive(Clone, Debug, Default, Depict, Resolve)]
 pub struct Host {
     /// Name.
     #[resolve(single)]
-    #[debuggable(style(string))]
+    #[depict(style(string))]
     pub name: ByteString,
 
     /// Whether to redirect all requests to this port.
     #[resolve(key = "redirect-to")]
-    #[debuggable(option, style(number))]
+    #[depict(option, style(number))]
     pub redirect_to: Option<u16>,
 
     /// Optional key configuration.
     #[resolve]
-    #[debuggable(option, as(debuggable))]
+    #[depict(option, as(depict))]
     pub key: Option<Key>,
 
     /// Optional ACME configuration.
     #[resolve]
-    #[debuggable(option, as(debuggable))]
+    #[depict(option, as(depict))]
     pub acme: Option<ACME>,
 }
 

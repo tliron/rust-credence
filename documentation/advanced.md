@@ -9,6 +9,7 @@ Built-in Administrative URLs
 
 Credence has some useful administrative URLs:
 
+* `/admin/about`: Provides credence-lib build information as text
 * `/admin/status/{status code}`: Simulates a status code, which is useful to testing your custom error pages (e.g. 404)
 * `/admin/reset-cache` (POST): Invalidates all pages in the (server-side) cache (more about caching below).
 * `/admin/shutdown` (POST): Initiates a graceful shutdown of the Credence process. If you're using some kind of service manager (e.g. systemd, see below) then this may trigger a restart.
@@ -54,7 +55,7 @@ Server-side caching is vital for scalable web sites. It's also useful as part of
 
 Credence's caching mechanism is especially efficient in that it incorporates compression (a.k.a. encoding). Credence will compress responses according the client preferences, supporting the common web compression algorithms: Brotli, Zstandard, Gzip, and Deflate. The efficiency concern is that even though compression saves bandwidth, it does use up compute resources on the server. By integrating compression into caching, Credence makes sure to only ever compress responses *once* per compression algorithm as long as the response is still in the cache.
 
-> Rustaceans! Credence's caching layer is available separately as general-purpose Tower middleware. See the [kutil_http](https://docs.rs/kutil-http/latest/kutil_http/tower/caching/struct.CachingLayer.html) library.
+> Rustaceans! Credence's caching layer is available separately as general-purpose Tower middleware. See the [kutil](https://docs.rs/kutil-http/latest/kutil/http/tower/caching/struct.CachingLayer.html) library.
 
 By default, Credence will cache responses in memory for 5 seconds. While a URL's page is in the cache, disk files will *not* be accessed and Markdown and Jinja will *not* be rendered. The response will be sent purely from memory.
 

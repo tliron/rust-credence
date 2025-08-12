@@ -1,7 +1,7 @@
 use {
     compris::resolve::*,
     duration_str::*,
-    kutil_std::string::*,
+    kutil::std::string::*,
     std::{io::*, result::Result, time::*},
 };
 

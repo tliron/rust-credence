@@ -3,8 +3,7 @@ use super::{super::coordinator::*, error::*};
 use {
     compris::resolve::*,
     httpdate::*,
-    kutil_cli::debug::*,
-    kutil_http::*,
+    kutil::{cli::depict::*, http::*},
     notify,
     std::{fs::*, io, path::*},
 };
@@ -14,31 +13,31 @@ use {
 //
 
 /// File coordinator configuration.
-#[derive(Clone, Debug, Debuggable, Resolve)]
+#[derive(Clone, Debug, Depict, Resolve)]
 pub struct CoordinateConfiguration {
     /// Paths to watch. When empty coordination will be disabled.
     #[resolve]
-    #[debuggable(iter(item), as(debug), style(string))]
+    #[depict(iter(item), as(debug), style(string))]
     pub paths: Vec<PathBuf>,
 
     /// Coordinator path. When [None] coordination will be disabled.
     #[resolve]
-    #[debuggable(option, as(debug), style(string))]
+    #[depict(option, as(debug), style(string))]
     pub coordinator: Option<PathBuf>,
 
     /// Whether to follow symlinks.
     #[resolve(key = "follow-symlinks")]
-    #[debuggable(style(symbol))]
+    #[depict(style(symbol))]
     pub follow_symlinks: bool,
 
     /// Whether to compare contents.
     #[resolve(key = "compare-contents")]
-    #[debuggable(style(symbol))]
+    #[depict(style(symbol))]
     pub compare_contents: bool,
 
     /// Message queue size.
     #[resolve(key = "queue-size")]
-    #[debuggable(style(number))]
+    #[depict(style(number))]
     pub queue_size: usize,
 }
 
@@ -112,6 +111,7 @@ impl CoordinateConfiguration {
                     None
                 }
             }
+
             None => None,
         })
     }

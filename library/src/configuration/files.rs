@@ -4,33 +4,33 @@ use super::{
     error::*,
 };
 
-use {compris::resolve::*, kutil_cli::debug::*, std::path::*};
+use {compris::resolve::*, kutil::cli::depict::*, std::path::*};
 
 //
 // FilesConfiguration
 //
 
 /// Files configuration.
-#[derive(Clone, Debug, Debuggable, Resolve)]
+#[derive(Clone, Debug, Depict, Resolve)]
 pub struct FilesConfiguration {
     /// Assets path.
     #[resolve]
-    #[debuggable(as(debug), style(string))]
+    #[depict(as(debug), style(string))]
     pub assets: PathBuf,
 
     /// Status path.
     #[resolve]
-    #[debuggable(as(debug), style(string))]
+    #[depict(as(debug), style(string))]
     pub status: PathBuf,
 
     /// Templates path.
     #[resolve]
-    #[debuggable(as(debug), style(string))]
+    #[depict(as(debug), style(string))]
     pub templates: PathBuf,
 
     /// Coordinate.
     #[resolve]
-    #[debuggable(as(debuggable))]
+    #[depict(as(depict))]
     pub coordinate: CoordinateConfiguration,
 }
 

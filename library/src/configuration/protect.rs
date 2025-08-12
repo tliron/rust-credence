@@ -1,36 +1,40 @@
 use super::super::resolve::*;
 
-use {::axum::http::HeaderMap, compris::resolve::*, kutil_cli::debug::*, kutil_http::*, kutil_std::zerocopy::*};
+use {
+    ::axum::http::HeaderMap,
+    compris::resolve::*,
+    kutil::{cli::depict::*, http::*, std::immutable::*},
+};
 
 //
 // Protect
 //
 
 /// Protect.
-#[derive(Clone, Debug, Debuggable, Default, Resolve)]
+#[derive(Clone, Debug, Default, Depict, Resolve)]
 pub struct Protect {
     /// Regex.
     ///
     /// See [implementation syntax](https://docs.rs/regex/latest/regex/#syntax).
     #[resolve(required)]
-    #[debuggable(option, as(display), style(string))]
+    #[depict(option, as(display), style(string))]
     pub regex: Option<ResolveRegex>,
 
     /// Optional realm.
     ///
     /// Note that modern browsers do not display the realm.
     #[resolve]
-    #[debuggable(option, style(string))]
+    #[depict(option, style(string))]
     pub realm: Option<ByteString>,
 
     /// Username.
     #[resolve(required)]
-    #[debuggable(style(string))]
+    #[depict(style(string))]
     pub username: ByteString,
 
     /// Password.
     #[resolve(required)]
-    #[debuggable(style(string))]
+    #[depict(style(string))]
     pub password: ByteString,
 }
 

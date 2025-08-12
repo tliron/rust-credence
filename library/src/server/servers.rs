@@ -2,7 +2,7 @@ use super::{super::configuration::*, server::*, site::*};
 
 use {
     axum_server::Handle,
-    kutil_std::collections::*,
+    kutil::std::collections::*,
     std::{io, net::*},
     tokio::task::*,
 };
@@ -16,7 +16,7 @@ use {
 /// This is the highest-level entity in a Credence application.
 ///
 /// All servers share the same [Handle] so that they can be shutdown together. See
-/// [Shutdown](kutil_http::axum::Shutdown).
+/// [Shutdown](kutil::http::axum::Shutdown).
 pub struct Servers {
     /// Axum server handle.
     pub handle: Handle,

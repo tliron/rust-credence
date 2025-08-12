@@ -10,7 +10,7 @@ use super::{
 use {
     ::axum::http::*,
     compris::{annotate::*, normal::*},
-    kutil_http::*,
+    kutil::{http::*, std::immutable::*},
     std::{path::*, result::Result},
     tokio::fs::*,
 };
@@ -58,14 +58,14 @@ where
 
                 let mut item = Map::default();
 
-                item.inner.insert("title".into(), title.into());
-                item.inner.insert("href".into(), href.into());
-                item.inner.insert("created".into(), created.into());
-                item.inner.insert("updated".into(), updated.into());
+                item.into_insert("title", ByteString::from(title));
+                item.into_insert("href", href);
+                item.into_insert("created", created);
+                item.into_insert("updated", updated);
 
                 for (key, column) in &annotation.extra_columns {
                     if let Some(value) = rendered_page.annotations.traverse_variable(column) {
-                        item.inner.insert((*key).into(), value.clone());
+                        item.into_insert(ByteString::from(*key), value.clone());
                     }
                 }
 

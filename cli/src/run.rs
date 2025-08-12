@@ -1,6 +1,6 @@
 use super::{cli::*, errors::*};
 
-use {clap::*, kutil_cli::log::*, tokio::runtime::*};
+use {clap::*, kutil::cli::log::*, tokio::runtime::*};
 
 /// Run.
 pub fn run() -> Result<(), MainError> {
@@ -18,11 +18,9 @@ pub fn run() -> Result<(), MainError> {
             tokio.block_on(cli.start())?;
         }
 
-        Some(subcommand) => match subcommand {
-            SubCommand::Version(version) => version.run::<CLI>(),
-            SubCommand::Completion(completion) => completion.run::<CLI>(),
-            SubCommand::Manual(manual) => manual.run::<CLI>()?,
-        },
+        Some(SubCommand::Version(version)) => version.run::<CLI>(),
+        Some(SubCommand::Completion(completion)) => completion.run::<CLI>(),
+        Some(SubCommand::Manual(manual)) => manual.run::<CLI>()?,
     }
 
     Ok(())

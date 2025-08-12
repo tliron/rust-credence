@@ -5,7 +5,7 @@ use super::{
 
 use {
     compris::{annotate::*, normal::*, parse::Parser, resolve::*, *},
-    kutil_std::{collections::*, string::*, zerocopy::*},
+    kutil::std::{collections::*, immutable::*, string::*},
 };
 
 //
@@ -57,8 +57,7 @@ impl Annotations {
 
     /// Parse.
     pub fn parse(identifier: &str, representation: &str, format: Format) -> Self {
-        match Parser::new(format).with_try_unsigned_integers(true).parse_from_string::<WithAnnotations>(representation)
-        {
+        match Parser::new(format).with_try_unsigned_integers(true).parse_string::<WithAnnotations>(representation) {
             Ok(annotations) => match annotations.resolve() {
                 Ok(annotations) => {
                     return annotations;

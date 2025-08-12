@@ -4,8 +4,7 @@ use super::{cli::*, errors::*};
 
 use {
     credence_lib::server::*,
-    kutil_cli::debug::*,
-    kutil_http::axum::*,
+    kutil::{cli::depict::*, http::axum::*},
     std::{io, time::*},
 };
 
@@ -63,7 +62,7 @@ impl CLI {
 
             tracing::info!("added site: {}", assets_path.display());
             if !self.quiet && (self.verbose > 0) {
-                site.configuration.eprint_debug();
+                site.configuration.eprint_default_depiction();
             }
 
             sites.push(site);

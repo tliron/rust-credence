@@ -1,4 +1,4 @@
-use {::compris::normal::*, kutil_http::*, std::cmp::*};
+use {::compris::normal::*, kutil::http::*, std::cmp::*};
 
 /// Compare [Variant] as lowercase.
 pub fn cmp_variant_lowercase<AnnotatedT>(a: &Variant<AnnotatedT>, b: &Variant<AnnotatedT>) -> Ordering {

@@ -4,14 +4,14 @@ Credence: Basics Guide
 Quickstart
 ----------
 
-First, [get it](https://github.com/tliron/rust-credence/releases).
+First, [get it](https://github.com/tliron/credence/releases).
 
 > We currently provide binaries for Linux, specifically with a relatively recent version of [glibc](https://sourceware.org/glibc/). If that's not what you have then you can build Credence yourself on your target machine by [getting Rust](https://www.rust-lang.org/tools/install) and then running `cargo install credence`. If building locally is impossible or doesn't work for your platform then you can always run our binary in a container. Note that it's also possible to build for Linux using [musl](https://musl.libc.org/) instead of glibc.
 
 Then run `credence`, pointing it at one (or more) directories of site assets. You can start with the [examples](../assets/examples) included in the download package or this repository. For example (with extra verbose logs):
 
 ```
-git clone https://github.com/tliron/rust-credence.git
+git clone https://github.com/tliron/credence.git
 credence -vv rust-credence/assets/examples/blog
 ```
 

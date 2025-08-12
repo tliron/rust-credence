@@ -1,6 +1,6 @@
 use {
     compris::{annotate::*, normal::*},
-    kutil_std::collections::*,
+    kutil::std::collections::*,
 };
 
 //

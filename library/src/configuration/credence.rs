@@ -12,13 +12,15 @@ use super::{
 
 use {
     compris::{annotate::*, normal::*, parse::*, resolve::*, *},
-    kutil_cli::debug::*,
-    kutil_http::{
-        cache::{Cache, CommonCacheKey},
-        tower::caching::*,
-        *,
+    kutil::{
+        cli::depict::*,
+        http::{
+            cache::{Cache, CommonCacheKey},
+            tower::caching::*,
+            *,
+        },
+        std::immutable::*,
     },
-    kutil_std::zerocopy::*,
     std::{collections::*, io, path::*},
 };
 
@@ -27,46 +29,46 @@ use {
 //
 
 /// Credence configuration.
-#[derive(Clone, Debug, Debuggable, Resolve)]
+#[derive(Clone, Debug, Depict, Resolve)]
 pub struct CredenceConfiguration {
     /// Definitions (ignored).
     #[resolve]
-    #[debuggable(skip)]
+    #[depict(skip)]
     pub definitions: Option<Variant<WithoutAnnotations>>,
 
     /// Files.
     #[resolve]
-    #[debuggable(as(debuggable))]
+    #[depict(as(depict))]
     pub files: FilesConfiguration,
 
     /// Ports.
     #[resolve]
-    #[debuggable(iter(kv), key_style(number), as(debuggable))]
+    #[depict(iter(kv), key_style(number), as(depict))]
     pub ports: BTreeMap<u16, Port>,
 
     /// Requests.
     #[resolve]
-    #[debuggable(as(debuggable))]
+    #[depict(as(depict))]
     pub requests: RequestsConfiguration,
 
     /// URLs.
     #[resolve]
-    #[debuggable(as(debuggable))]
+    #[depict(as(depict))]
     pub urls: UrlsConfiguration,
 
     /// Render.
     #[resolve]
-    #[debuggable(as(debuggable))]
+    #[depict(as(depict))]
     pub render: RenderConfiguration,
 
     /// Caching.
     #[resolve]
-    #[debuggable(as(debuggable))]
+    #[depict(as(depict))]
     pub caching: CachingConfiguration,
 
     /// Encoding.
     #[resolve]
-    #[debuggable(as(debuggable))]
+    #[depict(as(depict))]
     pub encoding: EncodingConfiguration,
 }
 
@@ -80,7 +82,7 @@ impl CredenceConfiguration {
             Parser::new(Format::YAML)
                 .with_source(source)
                 .with_try_unsigned_integers(true)
-                .parse(reader)
+                .parse_reader(reader)
                 .map_err(io::Error::other)?
         );
 

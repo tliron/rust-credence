@@ -2,9 +2,11 @@ use super::super::error::*;
 
 use {
     compris::resolve::*,
-    kutil_cli::debug::*,
-    kutil_http::tls::{ACME as KutilACME, *},
-    kutil_std::zerocopy::*,
+    kutil::{
+        cli::depict::*,
+        http::tls::{ACME as KutilACME, *},
+        std::immutable::*,
+    },
     std::path::*,
 };
 
@@ -13,21 +15,21 @@ use {
 //
 
 /// TLS ACME.
-#[derive(Clone, Debug, Debuggable, Resolve)]
+#[derive(Clone, Debug, Depict, Resolve)]
 pub struct ACME {
     /// ACME directory URI.
     #[resolve]
-    #[debuggable(style(string))]
+    #[depict(style(string))]
     pub directory: ByteString,
 
     /// Contacts (usually email addresses).
     #[resolve(required)]
-    #[debuggable(iter(item), style(string))]
+    #[depict(iter(item), style(string))]
     pub contacts: Vec<ByteString>,
 
     /// Cache.
     #[resolve]
-    #[debuggable(as(debug), style(string))]
+    #[depict(as(debug), style(string))]
     pub cache: PathBuf,
 }
 

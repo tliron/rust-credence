@@ -15,9 +15,9 @@ Rustaceans: All of Credence's functionality lives in [credence-lib](https://crat
 Documentation
 -------------
 
-* The [basics guide](https://github.com/tliron/rust-credence/blob/main/documentation/basics.md) will get you up and running with the default configuration.
-* The [advanced guide](https://github.com/tliron/rust-credence/blob/main/documentation/advanced.md) will take it to the next level.
-* We also have some useful [tips](https://github.com/tliron/rust-credence/blob/main/documentation/tips.md)!
+* The [basics guide](https://github.com/tliron/credence/blob/main/documentation/basics.md) will get you up and running with the default configuration.
+* The [advanced guide](https://github.com/tliron/credence/blob/main/documentation/advanced.md) will take it to the next level.
+* We also have some useful [tips](https://github.com/tliron/credence/blob/main/documentation/tips.md)!
 * And for Rustaceans there's the [credence-lib documentation](https://docs.rs/credence-lib/latest/credence_lib/).
 
 Features
@@ -51,7 +51,7 @@ Under the Hood
 --------------
 
 * Profoundly asynchronous (scales up gracefully), covering all networking, file access, caching, and compression algorithms
-* Automagical in-memory caching (using [kutil_http](https://docs.rs/kutil-http/latest/kutil_http/tower/caching/struct.CachingLayer.html))
+* Automagical in-memory caching (using [kutil](https://docs.rs/kutil-http/latest/kutil/http/tower/caching/struct.CachingLayer.html))
 * Automagical response compression (integrated into the cache)
 * [Rust](https://www.rust-lang.org/), [Tokio](https://github.com/tokio-rs/tokio), [Hyper](https://github.com/hyperium/hyper), [axum](https://github.com/tokio-rs/axum), [Tower](https://github.com/tower-rs/tower) (a.k.a. the "RTHaT stack"?)
 
@@ -60,7 +60,7 @@ License
 
 Like much of the Rust ecosystem, licensed under your choice of either of
 
-* [Apache License, Version 2.0](https://github.com/tliron/rust-credence/blob/main/LICENSE-APACHE)
-* [MIT license](https://github.com/tliron/rust-credence/blob/main/LICENSE-MIT)
+* [Apache License, Version 2.0](https://github.com/tliron/credence/blob/main/LICENSE-APACHE)
+* [MIT license](https://github.com/tliron/credence/blob/main/LICENSE-MIT)
 
 Unless you explicitly state otherwise, any contribution intentionally submitted for inclusion in the work by you, as defined in the Apache-2.0 license, shall be dual licensed as above, without any additional terms or conditions.

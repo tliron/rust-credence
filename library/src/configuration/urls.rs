@@ -4,33 +4,33 @@ use super::{
     redirect::*,
 };
 
-use {axum::http::*, compris::resolve::*, kutil_cli::debug::*, regex::*};
+use {axum::http::*, compris::resolve::*, kutil::cli::depict::*, regex::*};
 
 //
 // UrlsConfiguration
 //
 
 /// URLs configuration.
-#[derive(Clone, Debug, Debuggable, Resolve)]
+#[derive(Clone, Debug, Depict, Resolve)]
 pub struct UrlsConfiguration {
     /// Hide.
     #[resolve(key = "hide")]
-    #[debuggable(iter(item), as(display), style(string))]
+    #[depict(iter(item), as(display), style(string))]
     pub hide: Vec<ResolveRegex>,
 
     /// Redirect trailing slashes.
     #[resolve(key = "redirect-trailing-slashes")]
-    #[debuggable(style(symbol))]
+    #[depict(style(symbol))]
     pub redirect_trailing_slashes: bool,
 
     /// Redirect.
     #[resolve]
-    #[debuggable(iter(item), as(debuggable))]
+    #[depict(iter(item), as(depict))]
     pub redirect: Vec<Redirect>,
 
     /// Protect.
     #[resolve]
-    #[debuggable(iter(item), as(debuggable))]
+    #[depict(iter(item), as(depict))]
     pub protect: Vec<Protect>,
 }
 

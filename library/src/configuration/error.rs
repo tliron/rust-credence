@@ -1,7 +1,6 @@
 use {
     compris::{annotate::*, resolve::*},
-    kutil_cli::debug::*,
-    kutil_http::tls::*,
+    kutil::{cli::depict::*, http::tls::*},
     std::io,
     thiserror::*,
 };
@@ -39,9 +38,10 @@ impl ConfigurationError {
     pub fn eprint_validation_errors(&self) -> bool {
         match self {
             Self::Validation(errors) => {
-                errors.annotated_debuggables(Some("Invalid CredenceConfiguration".into())).eprint_debug();
+                errors.annotated_depictions(Some("Invalid CredenceConfiguration".into())).eprint_default_depiction();
                 true
             }
+
             _ => false,
         }
     }

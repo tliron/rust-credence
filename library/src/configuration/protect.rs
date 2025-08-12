@@ -1,6 +1,10 @@
 use super::super::resolve::*;
 
-use {::axum::http::HeaderMap, compris::resolve::*, kutil_cli::debug::*, kutil_http::*, kutil_std::zerocopy::*};
+use {
+    ::axum::http::HeaderMap,
+    compris::resolve::*,
+    kutil::{cli::debug::*, http::*, std::zerocopy::*},
+};
 
 //
 // Protect

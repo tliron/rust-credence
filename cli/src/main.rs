@@ -23,5 +23,5 @@ static GLOBAL: MiMalloc = MiMalloc;
 
 /// Main.
 pub fn main() -> ExitCode {
-    kutil_cli::run::run(run)
+    kutil::cli::run::run(run)
 }

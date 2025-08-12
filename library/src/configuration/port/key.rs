@@ -1,6 +1,10 @@
 use super::{super::error::*, loadable_bytes::*};
 
-use {compris::resolve::*, kutil_cli::debug::*, kutil_std::zerocopy::*, std::path::*};
+use {
+    compris::resolve::*,
+    kutil::{cli::debug::*, std::zerocopy::*},
+    std::path::*,
+};
 
 //
 // Key

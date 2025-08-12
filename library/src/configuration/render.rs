@@ -6,8 +6,10 @@ use super::{
 
 use {
     compris::{annotate::*, normal::*, resolve::*, *},
-    kutil_cli::debug::*,
-    kutil_std::{collections::*, metric::*, zerocopy::*},
+    kutil::{
+        cli::debug::*,
+        std::{collections::*, metric::*, zerocopy::*},
+    },
 };
 
 //

@@ -1,7 +1,6 @@
 use {
     compris::{resolve::*, *},
-    kutil_cli::debug::*,
-    kutil_std::zerocopy::*,
+    kutil::{cli::debug::*, std::zerocopy::*},
 };
 
 //

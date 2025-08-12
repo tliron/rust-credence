@@ -4,7 +4,7 @@ use super::{
     error::*,
 };
 
-use {compris::resolve::*, kutil_cli::debug::*, std::path::*};
+use {compris::resolve::*, kutil::cli::debug::*, std::path::*};
 
 //
 // FilesConfiguration
